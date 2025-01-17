@@ -56,7 +56,7 @@ function CustomDropdown({handelLogout}) {
 
   return (
     <div
-      className="position-relative mx-2 d-none d-lg-block"
+      className="position-relative mx-2"
       onMouseEnter={() => handleProfileHover(true)}
       onMouseLeave={() => handleProfileHover(false)}
     >
@@ -98,7 +98,7 @@ function CustomDropdown({handelLogout}) {
           </li>
         </ul>
       )}
-      <Profile show={showPro} setShow={setShowProfile}/>
+      <Profile show={showPro} setShow={setShowProfile} />
     </div>
   );
 }

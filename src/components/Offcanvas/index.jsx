@@ -7,6 +7,8 @@ import { Button } from "react-bootstrap";
 function Offcanvass({ show, setShow }) {
   let token = localStorage.getItem("token");
 
+  const handelClose = () => setShow(false)
+
   return (
     <>
       <Offcanvas show={show} onHide={setShow}>
@@ -17,39 +19,42 @@ function Offcanvass({ show, setShow }) {
         </Offcanvas.Header>
         <Offcanvas.Body className="text-center">
           <NavLink
-            to="/home"
+            to=""
             className="my-3 opacity-100 text-dark d-block text-decoration-none my-4"
+            onClick={handelClose}
           >
             Home
           </NavLink>
           <NavLink
             to="/event"
             className="my-3 opacity-100 text-dark d-block text-decoration-none  my-4"
+            onClick={handelClose}
           >
             Event
           </NavLink>
           <NavLink
             to="/about"
             className="my-3 opacity-100 text-dark d-block text-decoration-none  my-4"
+            onClick={handelClose}
           >
             About us
           </NavLink>
           <NavLink
             to="/cart"
             className="my-3 opacity-100 text-dark d-block text-decoration-none  my-4"
+            onClick={handelClose}
           >
             Cart
           </NavLink>
-          {token ? (
-            <Button variant="primary">Profile</Button>
-          ) : (
+          {!token &&
             <NavLink
               to="/login"
               className="my-3 opacity-100 text-dark d-block text-decoration-none  my-4"
+              onClick={handelClose}
             >
               Login
             </NavLink>
-          )}
+          }
         </Offcanvas.Body>
       </Offcanvas>
     </>

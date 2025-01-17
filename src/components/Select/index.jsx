@@ -14,6 +14,7 @@ function Select({ name, label, value, formik }) {
 
     // Convert the Set to an array and update the state with unique values
     setIUnq([...uniqueValues]);
+    
   }, [value]); // Trigger effect whenever 'value' changes
   
   return (

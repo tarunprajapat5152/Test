@@ -9,7 +9,7 @@ import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import InfoModel from "../../../components/InfoModel";
 import noevent from "../../../assets/no-events.jpg";
-
+import "./style.css";
 
 function Index() {
   const [loading, setLoading] = useState(false);
@@ -100,7 +100,7 @@ function Index() {
             >
               <Row className="container mx-auto vh-100 align-items-center mt-md-0">
                 <Col className="col-12 col-md-6 col-lg-6">
-                  <img className="h-100 w-100" src={item.imageUrl} alt="..." />
+                  <img className="carausel-img" src={item.imageUrl} alt="..." />
                 </Col>
                 <Col className="col-12 col-md-6 col-lg-6">
                   <div className="px-lg-5 text-white text-lg-start text-md-start text-sm-start text-center">
