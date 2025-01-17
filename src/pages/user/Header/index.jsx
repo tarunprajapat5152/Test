@@ -130,18 +130,18 @@ function Header() {
                 ""
               )}
             </div>
+            <div
+              className="ms-2 px-3 py-2 d-block d-lg-none"
+              onClick={handelMenu}
+            >
+              <AiOutlineMenu size={22} color="white" />
+            </div>
             {token ? (
                <CustomDropdown handelLogout={handleLogout} />
               
             ) : (
               ""
             )}
-            <div
-              className="border rounded-2 ms-2 px-3 py-2 d-block d-lg-none"
-              onClick={handelMenu}
-            >
-              <AiOutlineMenu size={22} color="white" />
-            </div>
           </div>
         </Container>
       </Navbar>
