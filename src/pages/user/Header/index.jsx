@@ -100,7 +100,7 @@ function Header() {
                 About us
               </NavLink>
               {role === "ADMIN" || role === "ORGANIZER" ? <NavLink
-                to="/dashboard"
+                to="/eventOrganizer"
                 className={({ isActive }) =>
                   `style-hover mx-3 text-decoration-none ${
                     isActive ? "text-white" : "custom-style"

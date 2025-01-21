@@ -89,7 +89,6 @@ export const forgetPasswordSchema = Yup.object({
     ),
 });
 
-
 export const organizerSchema = Yup.object({
   name: Yup.string()
     .min(2, "Please enter at least 2 characters")
@@ -101,19 +100,8 @@ export const organizerSchema = Yup.object({
     .required("Description is required"),
   category: Yup.string()
     .required("Please select a category"),
-  text: Yup.string()
-    .required("Please select a state"),
   city: Yup.string()
     .required("Please select a city"),
-  rentalCost: Yup.number()
-    .typeError("Please enter a valid rental cost")
-    .positive("Rental cost must be a positive number")
-    .required("Rental cost is required"),
-  capacity: Yup.number()
-    .typeError("Please enter a valid capacity")
-    .positive("Capacity must be a positive number")
-    .integer("Capacity must be a whole number")
-    .required("Capacity is required"),
   startDate: Yup.date()
     .nullable()
     .min(new Date(), "Start date cannot be in the past")
@@ -136,7 +124,6 @@ export const organizerSchema = Yup.object({
     .positive("Price must be a positive number")
     .required("Price is required"),
 });
-
 
 export const profileSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -169,4 +156,13 @@ export const FormSchema = Yup.object({
       Yup.string().email().isValidSync(value)
   ),
   Description:Yup.string().required("Please enter description").min(10),
+});
+
+export const editModal = Yup.object({
+  event_name: Yup.string()
+    .required("please enter valid event name")
+    .min(10),
+    event_details: Yup.string()
+    .required("please enter valid event name")
+    .min(10),
 });

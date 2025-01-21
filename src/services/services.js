@@ -152,61 +152,160 @@ export const postsApi = createApi({
     }),
 
     addToCart: builder.mutation({
-      query: ({eventUuid, userEmail, ticketQuantity}) => ({
+      query: ({ eventUuid, userEmail, ticketQuantity }) => ({
         url: "/cart/add",
         method: "POST",
         body: {
-          eventUuid, 
-          userEmail, 
-          ticketQuantity
-        }
-      })
+          eventUuid,
+          userEmail,
+          ticketQuantity,
+        },
+      }),
     }),
 
     makePayment: builder.mutation({
       query: (cartItem) => ({
-        url: 'user',
-        method: 'POST',       // POST request
-        body: cartItem,        // sending JSON body
+        url: "user",
+        method: "POST", // POST request
+        body: cartItem, // sending JSON body
       }),
     }),
 
     creareEvent: builder.mutation({
       query: (formData) => ({
-        url: '/event/create-event',
-        method: 'POST',
-        body: formData
-      })
+        url: "/event/create-event",
+        method: "POST",
+        body: formData,
+      }),
     }),
 
     eventFilter: builder.query({
       query: () => ({
         url: "/event/filter",
-        method: "GET"
-      })
+        method: "GET",
+      }),
     }),
 
     registerFilter: builder.query({
       query: () => ({
         url: "/register-place/filter",
-        method: "GET"
-      })
+        method: "GET",
+      }),
     }),
 
-    paymentApi: builder.mutation({
-      query: (email) => ({
+    payment: builder.mutation({
+      query: ({ userEmail }) => ({
         url: "/api/payment/create-payment-intent",
         method: "POST",
-        headers: {
-          'Content-Type': 'application/json', // Set the expected Content-Type
+        body: {
+          userEmail,
         },
-        body: JSON.stringify({ email })
-      })
-    })
+      }),
+    }),
+
+    success: builder.query({
+      query: (sessionId) => ({
+        url: `/api/payment/success?session_id=${sessionId}`,
+        method: "GET",
+      }),
+    }),
+
+    getSelectedEvent: builder.query({
+      query: ({
+        eventName = null,
+        category = null,
+        city = null,
+        startDate = "",
+        endDate = "",
+      }) =>
+        `/event/filter?eventName=${eventName}&category=${category}&city=${city}&startDate=${startDate}&endDate=${endDate}`,
+    }),
+
+    addCartData: builder.mutation({
+      query: ({ eventUuid, userEmail, ticketQuantity }) => ({
+        url: "/cart/add",
+        method: "POST",
+        body: {
+          eventUuid,
+          userEmail,
+          ticketQuantity,
+        },
+      }),
+    }),
+
+    buyData: builder.mutation({
+      query: ({ userEmail, quantity, eventUuid }) => ({
+        url: "/api/payment/create-payment-intent",
+        method: "POST",
+        body: {
+          eventUuid,
+          userEmail,
+          quantity,
+        },
+      }),
+    }),
+
+    checkStatus: builder.mutation({
+      query: ({ email }) => ({
+        url: "/organizer/check-status",
+        method: "POST",
+        body: {
+          email,
+        },
+      }),
+    }),
+
+    getPlace: builder.query({
+      query: () => "/register-place/filter",
+    }),
+
+    refund: builder.mutation({
+      query: ({ userEmail, eventUuid }) => ({
+        url: "/api/payment/refund",
+        method: "POST",
+        body: {
+          userEmail,
+          eventUuid,
+        },
+      }),
+    }),
+
+    getUserHistory: builder.mutation({
+      query: ({ email = "" }) => ({
+        url: `/api/payment/get-user-history?email=${email}`,
+      }),
+    }),
+
+    updateEvent: builder.mutation({
+      query: (formfile) => ({
+        url: "/event/update",
+        method: "PUT",
+        body: formfile,
+      }),
+    }),
+
+    getApprovalDashboard: builder.query({
+      query: ({ email, status }) => ({
+        url: `/event/get-organizer-data?email=${email}&status=${status}`,
+        method: "GET",
+      }),
+    }),
+
+    cancelEvent: builder.mutation({
+      query: () => ({
+        url: "/event/cancel",
+        method: "POST",
+        body: {},
+      }),
+    }),
   }),
 });
 
 export const {
+  useUpdateEventMutation,
+  useGetApprovalDashboardQuery,
+  useCancelEventMutation,
+  useGetPlaceUuidQuery,
   useGetOtpMutation,
   useVerifyOtpMutation,
   useStoreDataMutation,
@@ -229,5 +328,12 @@ export const {
   useCreareEventMutation,
   useEventFilterQuery,
   useRegisterFilterQuery,
-  usePaymentApiMutation
+  usePaymentMutation,
+  useGetSelectedEventQuery,
+  useGetPlaceQuery,
+  useSuccessQuery,
+  useAddCartDataMutation,
+  useBuyDataMutation,
+  useRefundMutation,
+  useGetUserHistoryMutation,
 } = postsApi;

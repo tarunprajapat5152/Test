@@ -28,6 +28,8 @@ function Select({ name, label, value, formik }) {
         value={formik.values[name]}
         style={{ outline: "none" }}
       >
+
+        <option value="">{name === "venueName" ? "venue" : "city"}</option>
         {unq.map((value, index) => (
           <option key={index} value={value}>
             {value}

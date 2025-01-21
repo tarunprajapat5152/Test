@@ -60,7 +60,7 @@ function MainContent() {
         }, 1000);
       }
     } else if (role === "ORGANIZER") {
-      navigate("/event");
+      navigate("/addEvent");
     } else if (role === "ADMIN") {
       setDisable(true)
       toast.error("you are admin");

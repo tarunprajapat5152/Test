@@ -198,7 +198,7 @@ li{
   display: none;
 }
 .forhght,.forheight{
-  height: 500px !important;
+  height: 550px !important;
 }
 @media (max-width: 991.98px) {
   .scroll {
@@ -246,4 +246,20 @@ li{
 }.for-mg{
   margin-top: -7px !important;
 }
-
+/* for organizer */
+.tab-btn{
+  color: #f5167e !important;
+}
+.tab-btn.active {
+  border-bottom: 3px solid #f5167e !important; 
+  font-weight: medium !important; 
+  color: #f5167e !important; 
+}.my-bg{
+  background-color: #f8f9fa !important;
+}btn-edit:disabled {
+  background-color: #a5a5a5; 
+  cursor: not-allowed;
+  opacity: 0.6;          
+}fade{
+  padding-left: 0px !important;
+}

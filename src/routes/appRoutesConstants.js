@@ -9,5 +9,14 @@ export const appRoutesConstants = {
     Home: "",
     About: "/about",
     Event: "/event",
-    Cart: "/cart"
+    Cart: "/cart",
+    History: "/history",
+    Success: "/success",
+    CreateEvent: "/createEvent",
+    AddEvent:"/addEvent",
+    Dashboard: "/dashboard",
+    EventOrganizer: "/eventOrganizer",
+    Payout: "/payout",
+    Approval: "/approval",
+    HistoryOrganizer: "/historyOrganizer"
 };

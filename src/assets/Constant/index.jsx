@@ -12,6 +12,9 @@ import empty from "../../assets/empty.png";
 import googlemap from "../../assets/googlemap.png";
 import becomePartner from "../../assets/partner.png";
 import user from "../../assets/user.png";
+import error from "../../assets/error.png";
+import info from "../../assets/info.png";
+import payment from "../../assets/payment-success.png";
 
 export {
   img1,
@@ -27,5 +30,8 @@ export {
   empty,
   becomePartner,
   googlemap,
-  user
+  user,
+  error,
+  info,
+  payment
 };
