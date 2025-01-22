@@ -30,7 +30,7 @@ function Header() {
           
         }
       } else {
-        navigate("/login");
+        navigate("/");
       }
     }, []);
 
