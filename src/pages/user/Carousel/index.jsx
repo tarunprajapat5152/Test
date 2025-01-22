@@ -26,8 +26,8 @@ function Index() {
   const [addToCart] = useAddToCartMutation();
 
   useEffect(() => {
-    const mytoken = localStorage.getItem("token");
-    if(mytoken){
+    const token = localStorage.getItem("token");
+    if(token){
     const decodeToken = jwtDecode(token).role;
     setRole(decodeToken);}
     else{
