@@ -26,9 +26,13 @@ function Index() {
   const [addToCart] = useAddToCartMutation();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const mytoken = localStorage.getItem("token");
+    if(mytoken){
     const decodeToken = jwtDecode(token).role;
-    setRole(decodeToken);
+    setRole(decodeToken);}
+    else{
+      setRole ("USER");
+        }
   }, []);
 
   const handleAdd = async (id) => {
