@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Carousel from "react-bootstrap/Carousel";
 import { Row, Col, Button } from "react-bootstrap";
@@ -16,7 +16,7 @@ import "./style.css";
 
 function Index() {
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
   const [show, setShow] = useState(false);
   const [select, setSelectedItem] = useState({});
 
@@ -25,12 +25,15 @@ function Index() {
   const { data, isLoading, isError } = useCarouselInfoQuery();
   const [addToCart] = useAddToCartMutation();
 
-  const role = localStorage.getItem("role");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const decodeToken = jwtDecode(token).role;
+    setRole(decodeToken);
+  }, []);
 
   const handleAdd = async (id) => {
     const token = localStorage.getItem("token");
     if (token) {
-      setLoading(true);
       const res = await addToCart({
         eventUuid: id,
         userEmail: jwtDecode(token).sub,
@@ -38,14 +41,14 @@ function Index() {
       });
 
       if (res.data.status) {
-        setLoading(false);
+        // setLoading(true);
         role === "ADMIN"
           ? toast.info("You Are Admin")
           : res.data.message === "Added to cart successfully"
           ? toast.success(res.data.message)
           : toast.info(res.data.message);
       } else {
-        setLoading(false);
+        // setLoading(false);
         toast.error("Failed to add to cart!");
       }
     } else {
@@ -108,25 +111,30 @@ function Index() {
                   <div className="px-lg-5 text-white text-lg-start text-md-start text-sm-start text-center">
                     <h3 className="fw-bold">{item.eventName}</h3>
                     <p>{item.eventDetails}</p>
-                    <Button
-                      className="rounded-pill px-4 py-2 fw-medium me-2"
-                      style={{ backgroundColor: "#F5167E", border: "none" }}
-                      variant="danger"
-                      disabled={loading}
-                      onClick={() => handleAdd(item.uuid)}
-                    >
-                      {loading ? "Adding..." : "Add to Cart"}
-                    </Button>
-                    <Button
-                      className="rounded-pill px-4 py-2 fw-medium"
-                      variant="outline-light"
-                      onClick={() => {
-                        setSelectedItem(item);
-                        setShow(true);
-                      }}
-                    >
-                      Learn More
-                    </Button>
+                    {console.log(role !== "ADMIN")}
+                    {role === "USER" && (
+                      <div>
+                        <Button
+                          className="rounded-pill px-4 py-2 fw-medium me-2"
+                          style={{ backgroundColor: "#F5167E", border: "none" }}
+                          variant="danger"
+                          // disabled={loading}
+                          onClick={() => handleAdd(item.uuid)}
+                        >
+                          {isLoading ? "Adding..." : "Add to Cart"}
+                        </Button>
+                        <Button
+                          className="rounded-pill px-4 py-2 fw-medium"
+                          variant="outline-light"
+                          onClick={() => {
+                            setSelectedItem(item);
+                            setShow(true);
+                          }}
+                        >
+                          Learn More
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 </Col>
               </Row>

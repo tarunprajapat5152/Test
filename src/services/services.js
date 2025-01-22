@@ -172,10 +172,10 @@ export const postsApi = createApi({
     }),
 
     creareEvent: builder.mutation({
-      query: (formData) => ({
+      query: (formData, placeUuid) => ({
         url: "/event/create-event",
         method: "POST",
-        body: formData,
+        body: formData, placeUuid
       }),
     }),
 
@@ -291,12 +291,35 @@ export const postsApi = createApi({
       }),
     }),
 
-    cancelEvent: builder.mutation({
-      query: () => ({
-        url: "/event/cancel",
-        method: "POST",
-        body: {},
+    cancelEvent:builder.mutation({
+      query:({eventUuid,description})=>({
+        url:"/event/cancel",
+        method:"POST",
+        body:{
+        eventUuid,description
+        }
+      })
+    }),
+
+    organizerHistory: builder.query({
+      query: ({email, status}) => ({
+        url: `/event/payout?email=${email}&status=${status}`,
+        method: "GET",
       }),
+    }),
+
+    organizerPayment:builder.query({
+      query:(eventUuid)=>({
+        url: `/api/payment/organizer-payment-intent?eventUuid=${eventUuid}`,
+        method:"GET"
+      })
+    }),
+
+    organizerSuccess:builder.query({
+      query:(sessionId)=>({
+        url:`/api/payment/organizer-success?sessionId=${sessionId}`,
+        method:"GET"
+      })
     }),
   }),
 });
@@ -336,4 +359,7 @@ export const {
   useBuyDataMutation,
   useRefundMutation,
   useGetUserHistoryMutation,
+  useOrganizerHistoryQuery,
+  useOrganizerPaymentQuery,
+  useOrganizerSuccessQuery
 } = postsApi;

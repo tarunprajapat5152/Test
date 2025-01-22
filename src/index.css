@@ -5,7 +5,7 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 body {
-  height: 100vh;
+  height: 100%;
   background-color: #f8f9fa !important;
 }
 #bg-linear {
@@ -198,7 +198,7 @@ li{
   display: none;
 }
 .forhght,.forheight{
-  height: 550px !important;
+   height: 85vh !important;
 }
 @media (max-width: 991.98px) {
   .scroll {

@@ -57,7 +57,7 @@ function EditModal({ show, setShow, selectedItem }) {
               uuid: selectedItem.uuid,
               eventName: values.event_name,
               eventDetails: values.event_details,
-              maxTicket: 99,
+              maxTicket: value,
             }),
           ],
           { type: "application/json" }

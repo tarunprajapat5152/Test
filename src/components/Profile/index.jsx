@@ -142,7 +142,7 @@ export const Profile = ({ show, setShow }) => {
                   />
                   <label
                     htmlFor="profilePic"
-                    className={`position-absolute bottom-0 end-0 crs me-4 pe-3 pb-1 mb-1 ${
+                    className={`position-absolute bottom-0 end-0 crs pe-3 pb-1 mb-1 ${
                       isEditable ? "" : "disabled"
                     }`}
                   >

@@ -8,6 +8,7 @@ import DetailsModal from "../DetailsModal";
 import "../../index.css";
 // import { toast } from "react-toastify";
 import { RiInformation2Fill } from "react-icons/ri";
+import { useOrganizerPaymentQuery } from "../../services/services";
 
 const DashboardItems = ({
   items,
@@ -16,11 +17,14 @@ const DashboardItems = ({
   setRejectedPending,
   setEdit,
 }) => {
+  // console.log("itemmmmm",items);
+  
   const [selectedItem, setSelectedItem] = useState(null);
   const [show, setShow] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [showDetailsData, setShowDetailsData] = useState(null);
+  const [eventUuid, setEventUuid] = useState("");
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -37,11 +41,25 @@ const DashboardItems = ({
     setShowDetailsData(items);
     setShowDetailsModal(true);
   };
-  
-  const handleCancel=(items)=>{
+
+  const handleCancel = (items) => {
     setShowModal(true);
-    setSelectedItem(items)
-  }
+    setSelectedItem(items);
+  };
+
+  const handlePay = (items) => {
+    setEventUuid(items.uuid);
+  };
+  const { data, isLoading } = useOrganizerPaymentQuery(eventUuid, {
+    skip: !eventUuid,
+  });
+
+  useEffect(() => {
+    if (data?.paymentUrl) {
+      window.location.href = data?.paymentUrl;
+      localStorage.setItem("sessionId", data?.sessionId);
+    }
+  }, [data]);
 
   return (
     <>
@@ -54,8 +72,8 @@ const DashboardItems = ({
           <img
             src={items.imageUrl}
             alt="Event"
-            className="rounded-3 img-fluid"
-            style={{ maxHeight: "150px", width: "100%" }}
+            className="rounded-3 img-fluid object-fit-cover object-fit-fill"
+            style={{ height: "150px", width: "100%" }}
           />
         </Col>
 
@@ -81,8 +99,12 @@ const DashboardItems = ({
               : items.eventDetails}
           </p>
 
-          <div className={`d-flex ${setCancelBtn?"justify-content-between":"justify-content-end"} mt-2`}>
-          <Button
+          <div
+            className={`d-flex ${
+              setCancelBtn ? "justify-content-between" : "justify-content-end"
+            } mt-2`}
+          >
+            <Button
               className={`${
                 setCancelBtn ? "d-block" : "d-none"
               } rounded-5 bg-danger border-0 text-white fw-medium px-3 py-1`}
@@ -103,13 +125,19 @@ const DashboardItems = ({
                 setPayBtn ? "d-block" : "d-none"
               } rounded-5 bg-primary border-0 text-white fw-medium px-3 py-1`}
               // onClick={() => handleEdit(items)}
+              onClick={() => {
+                handlePay(items);
+              }}
             >
               Pay
             </Button>
-            <p className={`${
+            <p
+              className={`${
                 setRejectedPending ? "d-block" : "d-none"
-              } text-danger fs-7 fw-medium`}>{setRejectedPending}...</p>
-           
+              } text-danger fs-7 fw-medium`}
+            >
+              {setRejectedPending}...
+            </p>
           </div>
         </Col>
       </Row>

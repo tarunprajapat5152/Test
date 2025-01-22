@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useGetUserHistoryMutation } from '../../../services/services'; 
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 
-const useEventData = (eventType) => {
+export const useEventData = () => {
   const [email, setEmail] = useState('');
   const [eventData, setEventData] = useState([]);
-  const [filteredEvents, setFilteredEvents] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // Add isLoading state
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [historyEvents, setHistoryEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [fetchUserHistoryData] = useGetUserHistoryMutation();
 
   useEffect(() => {
@@ -27,14 +28,14 @@ const useEventData = (eventType) => {
   useEffect(() => {
     if (email) {
       const getData = async () => {
-        setIsLoading(true); // Set loading to true before fetching data
+        setIsLoading(true);
         try {
           const res = await fetchUserHistoryData({ email }).unwrap();
           setEventData(res.data || []);
         } catch (error) {
           console.error("Error fetching data:", error);
         } finally {
-          setIsLoading(false); // Set loading to false after data is fetched
+          setIsLoading(false);
         }
       };
       getData();
@@ -43,24 +44,21 @@ const useEventData = (eventType) => {
 
   useEffect(() => {
     const today = new Date();
-    if (eventType === 'upcoming') {
-      setFilteredEvents(
-        eventData.filter((event) => {
-          const eventDateTime = new Date(`${event.startDate}T${event.eventStartTime}:00`);
-          return eventDateTime > today; 
-        })
-      );
-    } else if (eventType === 'history') {
-      setFilteredEvents(
-        eventData.filter((event) => {
-          const eventDateTime = new Date(`${event.startDate}T${event.eventStartTime}:00`);
-          return eventDateTime <= today; 
-        })
-      );
-    }
-  }, [eventData, eventType]);
+    setUpcomingEvents(
+      eventData.filter((event) => {
+        const eventDateTime = new Date(`${event.startDate}T${event.eventStartTime}:00`);
+        return eventDateTime > today; 
+      })
+    );
+    setHistoryEvents(
+      eventData.filter((event) => {
+        const eventDateTime = new Date(`${event.startDate}T${event.eventStartTime}:00`);
+        return eventDateTime <= today; 
+      })
+    );
+  }, [eventData]);
 
-  return { filteredEvents, isLoading };
+  return { upcomingEvents, historyEvents, isLoading };
 };
 
 export default useEventData;

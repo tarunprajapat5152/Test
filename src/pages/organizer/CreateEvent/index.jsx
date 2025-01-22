@@ -252,8 +252,9 @@ import {
   useEventFilterQuery,
 } from "../../../services/services";
 import { jwtDecode } from "jwt-decode";
+import { toast } from "react-toastify";
 
- function Event() {
+function Event() {
   const [image, setImage] = useState(upload);
   const [modalData, setModalData] = useState({});
   const [file, setFile] = useState(null); // File state
@@ -262,6 +263,7 @@ import { jwtDecode } from "jwt-decode";
 
   const [createEvent] = useCreareEventMutation();
   const { data } = useEventFilterQuery();
+  
 
   // Load image from localStorage on component mount
   useEffect(() => {
@@ -277,6 +279,7 @@ import { jwtDecode } from "jwt-decode";
 
   const formik = useFormik({
     initialValues: {
+      placeUuid: "",
       name: "",
       textarea: "",
       category: category[0],
@@ -289,21 +292,23 @@ import { jwtDecode } from "jwt-decode";
       endTime: "",
       quantity: "",
       price: "",
+      img: ""
     },
-    // validationSchema: organizerSchema,
+    validationSchema: organizerSchema,
     onSubmit: async (values) => {
       // console.log("Values : ", values);
       console.log("values: ", values);
       
-
       const formData = new FormData();
-
+      const placeUuid = values.placeUuid;
+      
       // Append form fields
       formData.append(
         "event",
         new Blob(
           [
             JSON.stringify({
+              placeUuid: values.placeUuid,
               eventName: values.name,
               email: email,
               eventDetails: values.textarea,
@@ -328,13 +333,16 @@ import { jwtDecode } from "jwt-decode";
       if (file) {
         formData.append("file", file);
       }
-      
+
       try {
-        const res = await createEvent(formData).unwrap();
-        console.log("Event created", res);
+        const res = await createEvent(formData, placeUuid).unwrap();
+        toast.success(res.body);
       } catch (error) {
         console.error("Error creating event", error);
       }
+
+      formik.resetForm();
+
     },
   });
 
@@ -356,117 +364,119 @@ import { jwtDecode } from "jwt-decode";
     setFile(null); // Clear the file
   };
 
-
-return (
-   <div className="m-auto" style={{ width: "92%" }}>
+  return (
+    <div className="m-auto" style={{ width: "92%" }}>
       <div className="scroll forheight flex-grow-1 ">
         <Container>
-      <form onSubmit={formik.handleSubmit}>
-        <Row>
-          <Col md={12} lg={6}>
-            <div className="custom-hi w-100 rounded-4 object-fit-cover">
-              <img
-                className="h-100 w-100 rounded-4 object-fit-cover"
-                src={image}
-                alt="..."
-              />
-            </div>
-            <div className="mt-4">
-              <div className="d-flex align-items-center">
-                <Button
-                  className="bg-transparent text-danger border-0"
-                  onClick={handleRemoveImage}
-                >
-                  <RiDeleteBin6Line className="pb-1" size={25} /> Remove
-                </Button>
-                <input
-                  type="file"
-                  accept="image/*"
-                  name="myfile"
-                  ref={fileInputRef}
-                  onChange={handleFile}
-                  hidden
-                />
-                <Button
-                  className="ms-4"
-                  variant="secondary"
-                  onClick={handleChange}
-                >
-                  Change
-                </Button>
-              </div>
-            </div>
-          </Col>
-          <Col md={12} lg={6} className="mt-4 mt-lg-0">
-            <h3 className="fw-bold mb-3">
-              <MdErrorOutline className="pb-2" color="blue" size={40} />{" "}
-              General information
-            </h3>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlInput1"
-            >
-              <Input
-                id="name"
-                name="name"
-                type="text"
-                formik={formik}
-                placeholder="input description"
-                bg="bg-body-secondary"
-                label="Name *"
-              />
-            </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Label className="m-0">Description</Form.Label>
-              <textarea
-                className="d-block w-100 rounded-3 px-3 py-1 bg-body-secondary border-0"
-                name="textarea"
-                style={{ outline: "none" }}
-                rows={2}
-                onChange={(e) => {
-                  formik.setFieldValue("textarea", e.target.value);
-                }}
-                value={formik.values.textarea}
-              />
-              {formik.touched.textarea && formik.errors.textarea ? (
-                <div className="flex-column formargin text-danger text-start mb-2 fs-8">
-                  {formik.errors.textarea}
+          <form onSubmit={formik.handleSubmit}>
+            <Row>
+              <Col md={12} lg={6}>
+                <div className="custom-hi w-100 rounded-4 object-fit-cover">
+                  <img
+                    className="h-100 w-100 rounded-4 object-fit-cover"
+                    src={image}
+                    alt="..."
+                  />
                 </div>
-              ) : null}
-            </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlInput1"
-            >
-              {data && (
-                <Select
-                  name="category"
-                  label="Category"
-                  value={data.map((value) => value.category)}
-                  formik={formik}
-                />
-              )}
-            </Form.Group>
-          </Col>
-        </Row>
-        <Accordionn formik={formik} />
-        <div className="d-flex justify-content-between mt-3 pb-2">
-          <Button className="px-3 fs-5 align-item-center" variant="secondary">
-            Cancel
-          </Button>
-          <Button className="px-5 fs-5" variant="primary" type="submit">
-            Next
-          </Button>
-        </div>
-      </form>
-   
-      </Container>
-     </div>
+                <div className="mt-4">
+                  <div className="d-flex align-items-center">
+                    <Button
+                      className="bg-transparent text-danger border-0"
+                      onClick={handleRemoveImage}
+                    >
+                      <RiDeleteBin6Line className="pb-1" size={25} /> Remove
+                    </Button>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      name="myfile"
+                      ref={fileInputRef}
+                      onChange={handleFile}
+                      hidden
+                    />
+                    <Button
+                      className="ms-4"
+                      variant="secondary"
+                      onClick={handleChange}
+                    >
+                      Change
+                    </Button>
+                  </div>
+                </div>
+              </Col>
+              <Col md={12} lg={6} className="mt-4 mt-lg-0">
+                <h3 className="fw-bold mb-3">
+                  <MdErrorOutline className="pb-2" color="blue" size={40} />{" "}
+                  General information
+                </h3>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlInput1"
+                >
+                  <Input
+                    id="name"
+                    name="name"
+                    type="text"
+                    formik={formik}
+                    placeholder="input description"
+                    bg="bg-body-secondary"
+                    label="Name *"
+                  />
+                </Form.Group>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlTextarea1"
+                >
+                  <Form.Label className="m-0">Description</Form.Label>
+                  <textarea
+                    className="d-block w-100 rounded-3 px-3 py-1 bg-body-secondary border-0"
+                    name="textarea"
+                    style={{ outline: "none" }}
+                    rows={2}
+                    onChange={(e) => {
+                      formik.setFieldValue("textarea", e.target.value);
+                    }}
+                    value={formik.values.textarea}
+                  />
+                </Form.Group>
+                  {formik.touched.textarea && formik.errors.textarea ? (
+                    <div className="flex-column formargin text-danger text-start mb-2 fs-8">
+                      {formik.errors.textarea}
+                    </div>
+                  ) : null}
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlInput1"
+                >
+                  {data && (
+                    <Select
+                      name="category"
+                      label="Category"
+                      value={data.map((value) => value.category)}
+                      formik={formik}
+                    />
+                  )}
+                </Form.Group>
+              </Col>
+            </Row>
+            <Accordionn formik={formik} />
+            <div className="d-flex justify-content-between mt-3 pb-2">
+              <Button
+                className="px-3 fs-5 align-item-center"
+                variant="secondary"
+                onClick={() => {formik.resetForm()}}
+              >
+                Cancel
+              </Button>
+              <Button className="px-5 fs-5" variant="primary" type="submit">
+                Next
+              </Button>
+            </div>
+          </form>
+        </Container>
+      </div>
     </div>
-   );
- }
+  );
+}
 
- export default Event;
+export default Event;

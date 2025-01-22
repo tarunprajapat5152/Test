@@ -26,7 +26,7 @@ function SideOffcanvas({ show, setShow }) {
         </Offcanvas.Header>
         <Offcanvas.Body className="d-flex flex-column">
           <Link
-            to="/events"
+            to="/eventOrganizer"
             className={`mb-3 text-center text-dark text-decoration-none ${
               eventsMatch ? "text-dark fw-bold" : "custom-style text-dark"
             }`}
@@ -35,7 +35,7 @@ function SideOffcanvas({ show, setShow }) {
           </Link>
 
           <Link
-            to="/events"
+            to="/approval"
             className={`mb-3 text-center text-dark text-decoration-none ${
               approvalMatch ? "text-dark fw-bold" : "custom-style text-dark"
             }`}
@@ -43,7 +43,7 @@ function SideOffcanvas({ show, setShow }) {
             Approval
           </Link>
           <Link
-            to="/events"
+            to="/addEvent"
             className={`mb-3 text-center text-dark text-decoration-none ${
               eventsMatch ? "text-dark fw-bold" : "custom-style text-dark"
             }`}
@@ -51,7 +51,7 @@ function SideOffcanvas({ show, setShow }) {
             Add Event
           </Link>
           <Link
-            to="/events"
+            to="/historyOrganizer"
             className={`mb-3 text-center text-dark text-decoration-none ${
               historyMatch ? "text-dark fw-bold" : "custom-style text-dark"
             }`}
@@ -59,7 +59,7 @@ function SideOffcanvas({ show, setShow }) {
             History
           </Link>
           <Link
-            to="/events"
+            to="/payout"
             className={`mb-3 text-center text-dark text-decoration-none ${
               payoutsMatch ? "text-dark fw-bold" : "custom-style text-dark"
             }`}
@@ -67,7 +67,7 @@ function SideOffcanvas({ show, setShow }) {
             Payouts
           </Link>
           <Link
-            to="/events"
+            to="/payout"
             className={`mb-3 text-center text-dark text-decoration-none ${
               eventsMatch ? "text-dark fw-bold" : "custom-style text-dark"
             }`}
