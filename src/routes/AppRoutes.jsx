@@ -1,4 +1,5 @@
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
+import  {jwtDecode} from "jwt-decode";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -25,14 +26,28 @@ import {
   Events,
   Payout,
   Approval,
-  HistoryOrganizer
+  HistoryOrganizer,
+  OverviewAdmin,
+  Blog,
+  EventsAdmin,
+  ApprovalAdmin,
+  HistoryAdmin,
+  PlacesAdmin
 } from "./index";
 import { appRoutesConstants } from "./appRoutesConstants";
 import { createContext } from "react";
+
 export const AppContext =createContext();
 
+
 function AppRoutes() {
+  // const [role, setRole] = useState("");
   const [update,setUpdate]=useState(false)
+  // useEffect(() => {
+  //     const token = localStorage.getItem("token");
+  //     const decodeToken = jwtDecode(token).role;
+  //     setRole(decodeToken);
+  //   }, []);
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
@@ -62,7 +77,15 @@ function AppRoutes() {
           <Route path={appRoutesConstants.Approval} element={<Approval/>}/>
           <Route path={appRoutesConstants.HistoryOrganizer} element={<HistoryOrganizer/>}/>
           <Route path={appRoutesConstants.AddEvent} element={<CreateEvent/>}/>
+          <Route path={appRoutesConstants.OverviewAdmin} element={<OverviewAdmin/>}/>
+          <Route path={appRoutesConstants.Blog} element={<Blog/>}/>
+          <Route path={appRoutesConstants.ApprovalAdmin} element={<ApprovalAdmin/>}/>
+          <Route path={appRoutesConstants.HistoryAdmin} element={<HistoryAdmin/>}/>
+          <Route path={appRoutesConstants.EventsAdmin} element={<EventsAdmin/>}/>
+          <Route path={appRoutesConstants.PlacesAdmin} element={<PlacesAdmin />} />
         </Route>
+
+         
       </>
     )
   );

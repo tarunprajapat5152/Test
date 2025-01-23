@@ -24,6 +24,7 @@ import './style.css';
 
 export const Event = () => {
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
   const [eventFilter, setEventFilter] = useState({
     eventName: "",
     category: "",
@@ -43,7 +44,7 @@ export const Event = () => {
   const { data: placeData, isLoading: isPlaceLoading } = useGetPlaceQuery();
   const [cartData] = useAddCartDataMutation();
   const [buyData] = useBuyDataMutation();
-
+  const [disableBtn , setDisableBtn] = useState(true);
   const [showModal2, setShowModal2] = useState(false); 
   
 
@@ -93,12 +94,21 @@ export const Event = () => {
     const token = localStorage.getItem("token");
     if (token) {
       setEmail(jwtDecode(token).sub);
+      setRole(jwtDecode(token).role);
+      console.log(jwtDecode(token).role);
       setCheckEmail(true);
     } else {
       setCheckEmail(false);
     }
+    
   }, []);
 
+  useEffect(() => {
+    if (role === 'USER') {
+      setDisableBtn(false);
+    }
+  }, [role]);
+  
   useEffect(() => {
     if (placeData) {
       const cities = [];
@@ -117,7 +127,7 @@ export const Event = () => {
   };
   const handleAddToCart = async (event) => {
     if (checkEmail === false) {
-      // navigate("/");
+       navigate("/");
     } else {
       try {
         const res = await cartData({
@@ -188,7 +198,7 @@ export const Event = () => {
                   handleBuyNow={handleBuyNow}
                   formatDateToLocal={formatDateToLocal}
                   handleInfoClick={handleInfoClick}
-
+                  disableBtn={disableBtn}
                 />
               </Col>
             ))}

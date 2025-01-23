@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useEffect,useState} from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { eventlogo } from "../../assets/Constant";
 import { NavLink } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import { jwtDecode } from "jwt-decode";
 
 function Offcanvass({ show, setShow }) {
+  const [role,setRole]=useState("");
   let token = localStorage.getItem("token");
-
+  useEffect(() => {
+    if(token){
+      const decodedToken = jwtDecode(token);
+      const decodedRole = decodedToken.role;
+      setRole(decodedRole)
+    }
+  },[])
+   
   const handelClose = () => setShow(false)
 
   return (
@@ -39,13 +48,19 @@ function Offcanvass({ show, setShow }) {
           >
             About us
           </NavLink>
-          <NavLink
+         {role=="USER"?(<NavLink
             to="/cart"
             className="my-3 opacity-100 text-dark d-block text-decoration-none  my-4"
             onClick={handelClose}
           >
             Cart
-          </NavLink>
+          </NavLink>):(<NavLink
+            to={role=="ADMIN"?"/overviewadmin":"/eventOrganizer"}
+            className="my-3 opacity-100 text-dark d-block text-decoration-none  my-4"
+            onClick={handelClose}
+          >
+            Dashboard
+          </NavLink>)} 
           {!token &&
             <NavLink
               to="/login"

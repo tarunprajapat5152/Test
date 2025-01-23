@@ -1,3 +1,4 @@
+
 export const appRoutesConstants = {
     Login: "/login",
     LoginContent: "/loginContent",
@@ -14,9 +15,14 @@ export const appRoutesConstants = {
     Success: "/success",
     CreateEvent: "/createEvent",
     AddEvent:"/addEvent",
-    Dashboard: "/dashboard",
     EventOrganizer: "/eventOrganizer",
     Payout: "/payout",
     Approval: "/approval",
-    HistoryOrganizer: "/historyOrganizer"
+    HistoryOrganizer: "/historyOrganizer",
+    OverviewAdmin: "/overviewadmin",
+    Blog: "/blog",
+    EventsAdmin: "/eventsAdmin",
+    ApprovalAdmin: "/approvalAdmin",
+    HistoryAdmin: "/historyAdmin",
+    PlacesAdmin: "/placesAdmin",
 };

@@ -192,9 +192,10 @@ li{
   cursor: pointer;
 }
 .scroll {
+  overflow-x: hidden;
   overflow-y: scroll;
 }
-.scroll::-webkit-scrollbar {
+.scroll::-webkit-scrollbar { 
   display: none;
 }
 .forhght,.forheight{

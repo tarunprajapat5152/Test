@@ -4,6 +4,13 @@ export const postsApi = createApi({
   reducerPath: "postsApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://event-management-t96y.onrender.com",
+    // prepareHeaders: (headers) => {
+    //   const token = localStorage.getItem('token');
+    //   if (token) {
+    //     headers.set("authorization", `Bearer ${token}`);
+    //   }
+    //   return headers;
+    // },
   }),
   endpoints: (builder) => ({
     getOtp: builder.mutation({
@@ -321,10 +328,59 @@ export const postsApi = createApi({
         method:"GET"
       })
     }),
+    getOrganizerPayment: builder.query({
+      query: ({eventUuid=''}) => 
+       ` /api/payment/organizer-get-payment?eventUuid=${eventUuid}`
+    }), 
+    getPayoutEvent: builder.query({
+      query: ({email='',status=''}) => 
+       `/event/payout?email=${email}&status=${status}`
+    }),
+    getEventAdmin:builder.query({
+      query:(city)=>({
+       url:`/event/filter?city=${city}`,
+       method:"GET"
+      }),
+    }),
+    getOrganizerData:builder.query({
+      query:()=>({
+       url:"/api/v1/admin/organizer-apply-data",
+       method:"GET"
+      })
+    }), getEventData:builder.query({
+      query:()=>({
+       url:"/api/v1/admin/event-data",
+       method:"GET"
+      })
+    }),
+    organizerApproval:builder.query({
+      query:({email,status})=>({
+        url:`/api/v1/admin/organizer-approval?email=${email}&status=${status}`,
+        method:"GET"
+      })
+    }),
+    eventApproval:builder.query({
+      query:({uuid,status})=>({
+        url:`/api/v1/admin/event-approval?eventUuid=${uuid}&status=${status}`,
+        method:"GET"
+      })
+    }), 
+    getOrganizerHistory: builder.query({
+      query: ({status=''}) => 
+        `/api/payment/organizer-event-history?status=${status}`
+    }),
   }),
 });
 
 export const {
+  useGetOrganizerHistoryQuery,
+  useGetEventAdminQuery,
+  useEventApprovalQuery,
+  useOrganizerApprovalQuery,
+  useGetEventDataQuery,
+  useGetOrganizerDataQuery,
+  useGetPayoutEventQuery,
+  useGetOrganizerPaymentQuery,
   useUpdateEventMutation,
   useGetApprovalDashboardQuery,
   useCancelEventMutation,

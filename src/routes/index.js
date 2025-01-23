@@ -17,6 +17,12 @@ import Events from "../pages/organizer/Events";
 import Payout from "../pages/organizer/Payout";
 import Approval from "../pages/organizer/Approval";
 import HistoryOrganizer from "../pages/organizer/History";
+import OverviewAdmin from "../pages/admin/OverviewAdmin";
+import Blog from "../pages/admin/BolgUpdate";
+import EventsAdmin from "../pages/admin/EventsAdmin";
+import ApprovalAdmin from "../pages/admin/ApprovalAdmin";
+import HistoryAdmin from "../pages/admin/HistoryAdmin";
+import PlacesAdmin from "../pages/admin/PlacesAdmin";
 
 export {
   Login,
@@ -33,9 +39,16 @@ export {
   History,
   Success,
   CreateEvent,
-  Dashboard,
   Events,
+  Dashboard,
   Payout,
   Approval,
-  HistoryOrganizer
+  HistoryOrganizer,
+  OverviewAdmin,
+  Blog,
+  EventsAdmin,
+  ApprovalAdmin,
+  HistoryAdmin,
+  PlacesAdmin
+  
 };

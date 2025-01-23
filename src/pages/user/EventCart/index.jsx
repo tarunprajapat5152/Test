@@ -4,7 +4,8 @@ import { FaMapMarkerAlt } from 'react-icons/fa';
 import { MdDateRange } from 'react-icons/md';
 import { IoMdInformationCircleOutline } from 'react-icons/io'; 
 
-const EventCard = ({ event,handleInfoClick, handleAddToCart, handleBuyNow, formatDateToLocal }) => {
+const EventCard = ({ event,handleInfoClick, handleAddToCart, handleBuyNow, formatDateToLocal, disableBtn }) => {
+  console.log(disableBtn)
   return (
     <Card className="w-100 mb-3 border shadow-sm">
       <Card.Img className="card-img-h" variant="top" src={event.imageUrl} />
@@ -38,6 +39,7 @@ const EventCard = ({ event,handleInfoClick, handleAddToCart, handleBuyNow, forma
             <button
               className='border-whole bg-transparent btn-sm fw-medium p-2 rounded my-2 d-flex align-items-center'
               onClick={() => handleAddToCart(event)}
+              disabled={disableBtn}
             >
               Add to Cart
             </button>
@@ -45,6 +47,7 @@ const EventCard = ({ event,handleInfoClick, handleAddToCart, handleBuyNow, forma
             <button
               className="bg-whole border-0 text-white btn-sm fw-medium p-2 rounded my-2"
               onClick={() => handleBuyNow(event)}
+              disabled={disableBtn}
             >
               Buy Now
             </button>

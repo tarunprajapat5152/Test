@@ -18,7 +18,7 @@ const CancelModal = ({ show, handleClose, handleRefund, selectedEvent }) => {
             {selectedEvent.totalPrice} rupees
           </div>
           <div>Refund amount <br />
-            {selectedEvent.totalPrice * 20 / 100} rupees
+            {selectedEvent.totalPrice * 80 / 100} rupees
           </div>
         </div>
       </Modal.Body>

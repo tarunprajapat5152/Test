@@ -1,17 +1,30 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { Link } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
 import { useMatch } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 function SideOffcanvas({ show, setShow }) {
+  const [role,setRole]=useState("");
   const eventsMatch = useMatch("/events");
-  const payoutsMatch = useMatch("/payouts");
+  const payoutsMatch = useMatch("/payout");
   const approvalMatch = useMatch("/approval");
-  const historyMatch = useMatch("/history");
+  const historyMatch = useMatch("/historyOrganizer");
+  const addEventMatch = useMatch("/createEvent");
+  const overviewAdminMatch = useMatch("/overviewadmin");
+  const historyAdminMatch = useMatch("/historyadmin");
+  const eventsAdminMatch = useMatch("/eventsadmin");
+  const approvalAdminMatch = useMatch("/approvaladmin");
+  const placesAdminMatch = useMatch("/placesadmin");
+  const blogsAdminMatch = useMatch("/blogsadmin");
 
+  useEffect(()=>{
+    const token=localStorage.getItem("token");
+    setRole(jwtDecode(token).role);
+    },[])
   return (
     <>
       <Offcanvas
@@ -25,8 +38,9 @@ function SideOffcanvas({ show, setShow }) {
           <Offcanvas.Title>Dashboard</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body className="d-flex flex-column">
-          <Link
-            to="/eventOrganizer"
+        <div className={`flex-column gap-4 ${role == "ORGANIZER" ? "d-flex" : "d-none"}`}>
+        <Link
+            to="/eventorganizer"
             className={`mb-3 text-center text-dark text-decoration-none ${
               eventsMatch ? "text-dark fw-bold" : "custom-style text-dark"
             }`}
@@ -43,9 +57,9 @@ function SideOffcanvas({ show, setShow }) {
             Approval
           </Link>
           <Link
-            to="/addEvent"
+            to="/createEvent"
             className={`mb-3 text-center text-dark text-decoration-none ${
-              eventsMatch ? "text-dark fw-bold" : "custom-style text-dark"
+              addEventMatch ? "text-dark fw-bold" : "custom-style text-dark"
             }`}
           >
             Add Event
@@ -66,20 +80,64 @@ function SideOffcanvas({ show, setShow }) {
           >
             Payouts
           </Link>
-          <Link
-            to="/payout"
+            </div>
+            <div className={`flex-column gap-4 ${role == "ADMIN" ? "d-flex" : "d-none"}`}>
+            <Link
+            to="/overviewadmin"
             className={`mb-3 text-center text-dark text-decoration-none ${
-              eventsMatch ? "text-dark fw-bold" : "custom-style text-dark"
+              overviewAdminMatch ? "text-dark fw-bold" : "custom-style text-dark"
             }`}
           >
-            Bank Details
+            Overview
           </Link>
+          <Link
+            to="/eventsadmin"
+            className={`mb-3 text-center text-dark text-decoration-none ${
+              eventsAdminMatch ? "text-dark fw-bold" : "custom-style text-dark"
+            }`}
+          >
+            Events
+          </Link>
+          <Link
+            to="/approvaladmin"
+            className={`mb-3 text-center text-dark text-decoration-none ${
+              approvalAdminMatch ? "text-dark fw-bold" : "custom-style text-dark"
+            }`}
+          >
+            Approval
+          </Link>
+          <Link
+            to="/blogsadmin"
+            className={`mb-3 text-center text-dark text-decoration-none ${
+              blogsAdminMatch ? "text-dark fw-bold" : "custom-style text-dark"
+            }`}
+          >
+            Blogs
+          </Link>
+          <Link
+            to="/historyadmin"
+            className={`mb-3 text-center text-dark text-decoration-none ${
+              historyAdminMatch ? "text-dark fw-bold" : "custom-style text-dark"
+            }`}
+          >
+            History
+          </Link>
+
+          <Link
+            to="/placesadmin"
+            className={`mb-3 text-center text-dark text-decoration-none ${
+              placesAdminMatch ? "text-dark fw-bold" : "custom-style text-dark"
+            }`}
+          >
+            Places
+          </Link>
+            </div>
           <Link
             onClick={() => {
               localStorage.removeItem("token");
               navigate("/login");
             }}
-            className="mb-3 text-center text-danger text-decoration-none"
+            className="my-3 text-center text-danger text-decoration-none"
           >
             <CiLogout /> Logout
           </Link>
