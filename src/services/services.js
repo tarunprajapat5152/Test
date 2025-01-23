@@ -182,7 +182,8 @@ export const postsApi = createApi({
       query: (formData, placeUuid) => ({
         url: "/event/create-event",
         method: "POST",
-        body: formData, placeUuid
+        body: formData,
+        placeUuid,
       }),
     }),
 
@@ -298,76 +299,82 @@ export const postsApi = createApi({
       }),
     }),
 
-    cancelEvent:builder.mutation({
-      query:({eventUuid,description})=>({
-        url:"/event/cancel",
-        method:"POST",
-        body:{
-        eventUuid,description
-        }
-      })
+    cancelEvent: builder.mutation({
+      query: ({ eventUuid, description }) => ({
+        url: "/event/cancel",
+        method: "POST",
+        body: {
+          eventUuid,
+          description,
+        },
+      }),
     }),
 
     organizerHistory: builder.query({
-      query: ({email, status}) => ({
+      query: ({ email, status }) => ({
         url: `/event/payout?email=${email}&status=${status}`,
         method: "GET",
       }),
     }),
 
-    organizerPayment:builder.query({
-      query:(eventUuid)=>({
+    organizerPayment: builder.query({
+      query: (eventUuid) => ({
         url: `/api/payment/organizer-payment-intent?eventUuid=${eventUuid}`,
-        method:"GET"
-      })
-    }),
-
-    organizerSuccess:builder.query({
-      query:(sessionId)=>({
-        url:`/api/payment/organizer-success?sessionId=${sessionId}`,
-        method:"GET"
-      })
-    }),
-    getOrganizerPayment: builder.query({
-      query: ({eventUuid=''}) => 
-       ` /api/payment/organizer-get-payment?eventUuid=${eventUuid}`
-    }), 
-    getPayoutEvent: builder.query({
-      query: ({email='',status=''}) => 
-       `/event/payout?email=${email}&status=${status}`
-    }),
-    getEventAdmin:builder.query({
-      query:(city)=>({
-       url:`/event/filter?city=${city}`,
-       method:"GET"
+        method: "GET",
       }),
     }),
-    getOrganizerData:builder.query({
-      query:()=>({
-       url:"/api/v1/admin/organizer-apply-data",
-       method:"GET"
-      })
-    }), getEventData:builder.query({
-      query:()=>({
-       url:"/api/v1/admin/event-data",
-       method:"GET"
-      })
+
+    organizerSuccess: builder.query({
+      query: (sessionId) => ({
+        url: `/api/payment/organizer-success?sessionId=${sessionId}`,
+        method: "GET",
+      }),
     }),
-    organizerApproval:builder.query({
-      query:({email,status})=>({
-        url:`/api/v1/admin/organizer-approval?email=${email}&status=${status}`,
-        method:"GET"
-      })
+
+    getPayoutEvent: builder.query({
+      query: ({ email = "", status = "" }) =>
+        `/event/payout?email=${email}&status=${status}`,
     }),
-    eventApproval:builder.query({
-      query:({uuid,status})=>({
-        url:`/api/v1/admin/event-approval?eventUuid=${uuid}&status=${status}`,
-        method:"GET"
-      })
-    }), 
+    getEventAdmin: builder.query({
+      query: (city) => ({
+        url: `/event/filter?city=${city}`,
+        method: "GET",
+      }),
+    }),
+    getOrganizerData: builder.query({
+      query: () => ({
+        url: "/api/v1/admin/organizer-apply-data",
+        method: "GET",
+      }),
+    }),
+    getEventData: builder.query({
+      query: () => ({
+        url: "/api/v1/admin/event-data",
+        method: "GET",
+      }),
+    }),
+    organizerApproval: builder.query({
+      query: ({ email, status }) => ({
+        url: `/api/v1/admin/organizer-approval?email=${email}&status=${status}`,
+        method: "GET",
+      }),
+    }),
+    eventApproval: builder.query({
+      query: ({ uuid, status }) => ({
+        url: `/api/v1/admin/event-approval?eventUuid=${uuid}&status=${status}`,
+        method: "GET",
+      }),
+    }),
     getOrganizerHistory: builder.query({
-      query: ({status=''}) => 
-        `/api/payment/organizer-event-history?status=${status}`
+      query: ({ status = "" }) =>
+        `/api/payment/organizer-event-history?status=${status}`,
+    }),
+    adminBlogView: builder.mutation({
+      query: (data) => ({
+        url: "/blog/update",
+        method: "PUT",
+        body: data,
+      }),
     }),
   }),
 });
@@ -417,5 +424,6 @@ export const {
   useGetUserHistoryMutation,
   useOrganizerHistoryQuery,
   useOrganizerPaymentQuery,
-  useOrganizerSuccessQuery
+  useOrganizerSuccessQuery,
+  useAdminBlogViewMutation
 } = postsApi;

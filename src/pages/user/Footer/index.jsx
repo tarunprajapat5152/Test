@@ -3,6 +3,7 @@ import Container from "react-bootstrap/Container";
 import { Row, Col, Button } from "react-bootstrap";
 import { facebook, twitter, linkedin } from "../../../assets/Constant";
 import { eventlogo } from "../../../assets/Constant";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
@@ -43,10 +44,9 @@ function Footer() {
             <div>
               <h6 className="fw-bold">Eventick</h6>
               <ul className="list-unstyled mt-4">
-                <li className="mb-2">About Us</li>
-                <li className="mb-2">Press</li>
-                <li className="mb-2">Contact US</li>
-                <li className="mb-2">Help Center</li>
+                <li className="mb-2"><Link to="/about">About Us</Link> </li>
+                <li className="mb-2"><Link to="/about">Contact US</Link> </li>
+                <li className="mb-2"><Link to="/about">Help Center</Link> </li>
                 {/* <li className='mb-2'>How it Works</li>
                             <li className='mb-2'>Privacy</li>
                             <li className='mb-2'>Terms</li> */}
@@ -60,21 +60,12 @@ function Footer() {
               Event and concert
             </p>
             <div>
-              <div>
-                <Button
-                  className="rounded-5 position-absolute fw-medium border-0 py-2"
-                  style={{ backgroundColor: "#F5167E" }}
-                  variant="danger"
-                >
-                  Subscribe Now
-                </Button>
-              </div>
             </div>
           </Col>
         </Row>
         <hr />
         <div className="text-center">
-          <p>Copyright @ 2024 Event Management Team</p>
+          <Link to="/">Copyright @ 2024 Event Management Team</Link>
         </div>
       </Container>
     </div>

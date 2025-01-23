@@ -3,7 +3,7 @@ import { Button, Row, Col } from "react-bootstrap";
 import { RiInformation2Fill } from "react-icons/ri";
 import { toast } from "react-toastify";
 import { AppContext } from "../../routes/AppRoutes";
-import { useOrganizerApprovalQuery, useEventApprovalQuery, useGetOrganizerPaymentQuery } from "../../services/services";
+import { useOrganizerApprovalQuery, useEventApprovalQuery, useOrganizerPaymentQuery } from "../../services/services";
 import DetailsModal from "../../components/DetailsModal";
 
 const AdminDashboardItems = ({
@@ -20,9 +20,9 @@ const AdminDashboardItems = ({
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [showDetailsData, setShowDetailsData] = useState(null);
 
-  const { data: paymentData } = useGetOrganizerPaymentQuery(
+  const { data: paymentData } = useOrganizerPaymentQuery(
     { eventUuid },
-    { skip: !eventUuid }
+    { skip: !eventUuid } // sun tu abhi work kar raha he kya mere laptop ke saath bol ha kab tak 4 m
   );
 
   const { data, isLoading } = useOrganizerApprovalQuery(
@@ -105,11 +105,13 @@ const AdminDashboardItems = ({
                 <div className="d-flex justify-content-between">
                   <h5 className="fw-bold mb-1">{items.eventName}</h5>
                   <p className="fw-medium text-primary mb-1">
-                    {formatDate(items.startDate)}
+                    {items.startDate}
                   </p>
                 </div>
-                <p className="mb-1">Organizer: {items.organizerName}</p>
+                <p className="mb-1">Organization Name: {items.organizerName||"No shop"}</p>
+                <p className="mb-1">Details:{items.details}</p>
                 <p className="mb-1">Email: {items.email}</p>
+                <p className="mb-1">Attempts: {items.attempts}</p>
                 <p className="text-muted mb-2 text-break">
                   {items.eventDetails?.length > 65
                     ? `${items.eventDetails.substring(0, 65)}...`
@@ -186,9 +188,9 @@ const AdminDashboardItems = ({
                 {formatDate(items.startDate)}
               </p>
               <p className="text-muted mb-2">
-                {items.eventDetails.split(" ").length > 15
-                  ? `${items.eventDetails.split(" ").slice(0, 15).join(" ")}...`
-                  : items.eventDetails}
+              {items.eventDetails?.length > 65
+                    ? `${items.eventDetails.substring(0, 65)}...`
+                    : items.eventDetails}
               </p>
               <div>
                 {setInfo && (

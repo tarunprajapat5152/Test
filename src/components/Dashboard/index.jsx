@@ -17,10 +17,12 @@ import { BsList } from "react-icons/bs";
 import SideOffcanvas from "../SideOffcanvas";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { useLocation } from "react-router-dom";
 
 const Dashboard = () => {
+  const location=useLocation();
+  const lastPathSegment = location.pathname.split("/").filter(Boolean).pop();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("Events");
   const [show, setShow] = useState(false);
   const token = localStorage.getItem("token");
   const [role,setRole]=useState("");
@@ -63,9 +65,6 @@ const Dashboard = () => {
                     : "custom-style text-dark bg-grey"
                 }`
               }
-              onClick={() => {
-                setActiveTab("eventOrganizer");
-              }}
             >
               <div className="d-flex flex-row gap-2 align-items-center">
                 <div className="d-flex align-items-center">
@@ -84,9 +83,7 @@ const Dashboard = () => {
                     : "custom-style text-dark bg-grey"
                 }`
               }
-              onClick={() => {
-                setActiveTab("approval");
-              }}
+
             >
               <div className="d-flex flex-row gap-2 align-items-center">
                 <div className="d-flex align-items-center">
@@ -105,9 +102,7 @@ const Dashboard = () => {
                     : "custom-style text-dark bg-grey"
                 }`
               }
-              onClick={() => {
-                setActiveTab("addEvent");
-              }}
+
             >
               <div className="d-flex flex-row gap-2 align-items-center">
                 <div className="d-flex align-items-center">
@@ -126,9 +121,7 @@ const Dashboard = () => {
                     : "custom-style text-dark bg-grey"
                 }`
               }
-              onClick={() => {
-                setActiveTab("historyOrganizer");
-              }}
+              
             >
               <div className="d-flex flex-row gap-2 align-items-center">
                 <div className="d-flex align-items-center">
@@ -147,9 +140,7 @@ const Dashboard = () => {
                     : "custom-style text-dark bg-grey"
                 }`
               }
-              onClick={() => {
-                setActiveTab("payout");
-              }}
+
             >
               <div className="d-flex flex-row gap-2 align-items-center">
                 <div className="d-flex align-items-center">
@@ -170,9 +161,7 @@ const Dashboard = () => {
                     : "custom-style text-dark bg-grey"
                 }`
               }
-              onClick={() => {
-                setActiveTab("overviewAdmin");
-              }}
+       
             >
               <div className="d-flex flex-row gap-2 align-items-center">
                 <div className="d-flex align-items-center">
@@ -191,9 +180,7 @@ const Dashboard = () => {
                     : "custom-style text-dark bg-grey"
                 }`
               }
-              onClick={() => {
-                setActiveTab("eventsAdmin");
-              }}
+
             >
               <div className="d-flex flex-row gap-2 align-items-center">
                 <div className="d-flex align-items-center">
@@ -212,9 +199,7 @@ const Dashboard = () => {
                     : "custom-style text-dark bg-grey"
                 }`
               }
-              onClick={() => {
-                setActiveTab("approvalAdmin");
-              }}
+
             >
               <div className="d-flex flex-row gap-2 align-items-center">
                 <div className="d-flex align-items-center">
@@ -233,9 +218,7 @@ const Dashboard = () => {
                     : "custom-style text-dark bg-grey"
                 }`
               }
-              onClick={() => {
-                setActiveTab("blog");
-              }}
+
             >
               <div className="d-flex flex-row gap-2 align-items-center">
                 <div className="d-flex align-items-center">
@@ -254,9 +237,7 @@ const Dashboard = () => {
                     : "custom-style text-dark bg-grey"
                 }`
               }
-              onClick={() => {
-                setActiveTab("historyAdmin");
-              }}
+
             >
               <div className="d-flex flex-row gap-2 align-items-center">
                 <div className="d-flex align-items-center">
@@ -276,9 +257,6 @@ const Dashboard = () => {
                     : "custom-style text-dark bg-grey"
                 }`
               }
-              onClick={() => {
-                setActiveTab("placesadmin");
-              }}
             >
               <div className="d-flex flex-row gap-2 align-items-center">
                 <div className="d-flex align-items-center">
@@ -301,7 +279,7 @@ const Dashboard = () => {
                   <Breadcrumb.Item>
                     <Link to="/">Home</Link>
                   </Breadcrumb.Item>
-                  <Breadcrumb.Item active>{activeTab}</Breadcrumb.Item>
+                  <Breadcrumb.Item active>{lastPathSegment}</Breadcrumb.Item>
                 </Breadcrumb>
                 <div>
                   {" "}

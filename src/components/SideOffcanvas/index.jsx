@@ -9,17 +9,17 @@ import { jwtDecode } from "jwt-decode";
 
 function SideOffcanvas({ show, setShow }) {
   const [role,setRole]=useState("");
-  const eventsMatch = useMatch("/events");
+  const eventsMatch = useMatch("/eventorganizer");
   const payoutsMatch = useMatch("/payout");
   const approvalMatch = useMatch("/approval");
   const historyMatch = useMatch("/historyOrganizer");
-  const addEventMatch = useMatch("/createEvent");
+  const addEventMatch = useMatch("/addEvent");
   const overviewAdminMatch = useMatch("/overviewadmin");
   const historyAdminMatch = useMatch("/historyadmin");
   const eventsAdminMatch = useMatch("/eventsadmin");
   const approvalAdminMatch = useMatch("/approvaladmin");
   const placesAdminMatch = useMatch("/placesadmin");
-  const blogsAdminMatch = useMatch("/blogsadmin");
+  const blogsAdminMatch = useMatch("/blog");
 
   useEffect(()=>{
     const token=localStorage.getItem("token");
@@ -57,7 +57,7 @@ function SideOffcanvas({ show, setShow }) {
             Approval
           </Link>
           <Link
-            to="/createEvent"
+            to="/addEvent"
             className={`mb-3 text-center text-dark text-decoration-none ${
               addEventMatch ? "text-dark fw-bold" : "custom-style text-dark"
             }`}
@@ -107,7 +107,7 @@ function SideOffcanvas({ show, setShow }) {
             Approval
           </Link>
           <Link
-            to="/blogsadmin"
+            to="/blog"
             className={`mb-3 text-center text-dark text-decoration-none ${
               blogsAdminMatch ? "text-dark fw-bold" : "custom-style text-dark"
             }`}

@@ -159,18 +159,18 @@ export const organizerSchema = Yup.object({
       "quantity should be less than capacity or equal",
       function (value) {
         console.log(value);
-        
-        const {capacity} = this.parent;
+
+        const { capacity } = this.parent;
         console.log(capacity);
 
         return value <= capacity;
-        
       }
     ),
   price: Yup.number()
     .typeError("Please enter a valid price")
     .positive("Price must be a positive number")
     .required("Price is required"),
+  // img: Yup.string().required("Please upload an image"),
 });
 
 export const profileSchema = Yup.object().shape({
@@ -208,3 +208,16 @@ export const editModal = Yup.object({
   event_name: Yup.string().required("please enter valid event name").min(10),
   event_details: Yup.string().required("please enter valid event name").min(10),
 });
+
+export const blogUpdate = Yup.object({
+  name: Yup.string()
+  .min(2, "please enter coorect name")
+  .max(25, "you caant enter grather than 25 char")
+  .required("name is requried"),
+  date: Yup.date()
+  .required("please select date"),
+  heading: Yup.string("please enter heading"),
+  discription: Yup.string("please enter discription")
+  .min(70, "please enter atleast 70 char")
+  .max(100, "you can enter max 100 char")
+})

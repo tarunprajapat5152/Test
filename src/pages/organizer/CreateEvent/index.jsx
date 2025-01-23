@@ -373,12 +373,18 @@ function Event() {
               <Col md={12} lg={6}>
                 <div className="custom-hi w-100 rounded-4 object-fit-cover">
                   <img
+                    name="img"
                     className="h-100 w-100 rounded-4 object-fit-cover"
                     src={image}
                     alt="..."
                   />
                 </div>
                 <div className="mt-4">
+                   {formik.touched.img && formik.errors.img ? (
+                    <div className="flex-column formargin text-danger text-start mb-2 fs-8">
+                      {formik.errors.img}
+                    </div>
+                  ) : null}
                   <div className="d-flex align-items-center">
                     <Button
                       className="bg-transparent text-danger border-0"

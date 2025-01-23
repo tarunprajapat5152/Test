@@ -18,7 +18,7 @@ import Payout from "../pages/organizer/Payout";
 import Approval from "../pages/organizer/Approval";
 import HistoryOrganizer from "../pages/organizer/History";
 import OverviewAdmin from "../pages/admin/OverviewAdmin";
-import Blog from "../pages/admin/BolgUpdate";
+import Blog from "../pages/admin/Bolg";
 import EventsAdmin from "../pages/admin/EventsAdmin";
 import ApprovalAdmin from "../pages/admin/ApprovalAdmin";
 import HistoryAdmin from "../pages/admin/HistoryAdmin";
