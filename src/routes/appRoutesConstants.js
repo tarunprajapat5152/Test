@@ -1,3 +1,5 @@
+import ApprovalAdmin from "../pages/Admin/ApprovalAdmin";
+
 export const appRoutesConstants = {
     Login: "/login",
     LoginContent: "/loginContent",
@@ -18,5 +20,8 @@ export const appRoutesConstants = {
     EventOrganizer: "/eventOrganizer",
     Payout: "/payout",
     Approval: "/approval",
-    HistoryOrganizer: "/historyOrganizer"
+    HistoryOrganizer: "/historyOrganizer",
+    EventAdmin:"/eventadmin",
+    ApprovalAdmin:"approvaladmin",
+    Blog:"/blog"
 };

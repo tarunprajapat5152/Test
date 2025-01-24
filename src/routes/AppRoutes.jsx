@@ -25,7 +25,10 @@ import {
   Events,
   Payout,
   Approval,
-  HistoryOrganizer
+  HistoryOrganizer,
+  EventAdmin,
+  ApprovalAdmin,
+  Blog
 } from "./index";
 import { appRoutesConstants } from "./appRoutesConstants";
 import { createContext } from "react";
@@ -57,6 +60,9 @@ function AppRoutes() {
         </Route>
 
         <Route path="/" element={<Dashboard/>}>
+        <Route path={appRoutesConstants.EventAdmin} element={<EventAdmin/>}/>
+        <Route path={appRoutesConstants.ApprovalAdmin} element={<ApprovalAdmin/>}/>
+        <Route path={appRoutesConstants.Blog} element={<Blog/>}/>
           <Route path={appRoutesConstants.EventOrganizer} element={<Events/>}/>
           <Route path={appRoutesConstants.Payout} element={<Payout/>}/>
           <Route path={appRoutesConstants.Approval} element={<Approval/>}/>

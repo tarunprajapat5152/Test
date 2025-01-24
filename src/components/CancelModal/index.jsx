@@ -11,7 +11,8 @@ import { useCancelEventMutation } from "../../services/services";
 function CancelModal({ show, setShow, cancelItems }) {
   const [apiFunction]=useCancelEventMutation();
   const cancelEvent=async()=>{
-    const res=await apiFunction();
+    const res=await apiFunction(cancelItems.eventUuid);
+    console.log(res);
   }
   return (
     <>

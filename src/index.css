@@ -192,13 +192,14 @@ li{
   cursor: pointer;
 }
 .scroll {
+  overflow-x: hidden;
   overflow-y: scroll;
 }
 .scroll::-webkit-scrollbar {
   display: none;
 }
 .forhght,.forheight{
-  height: 550px !important;
+  height: 75vh !important;
 }
 @media (max-width: 991.98px) {
   .scroll {
@@ -262,4 +263,6 @@ li{
   opacity: 0.6;          
 }fade{
   padding-left: 0px !important;
+}.vh-75{
+  height:88vh !important;
 }

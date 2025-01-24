@@ -17,6 +17,9 @@ import Events from "../pages/organizer/Events";
 import Payout from "../pages/organizer/Payout";
 import Approval from "../pages/organizer/Approval";
 import HistoryOrganizer from "../pages/organizer/History";
+import EventAdmin from "../pages/Admin/EventAdmin";
+import ApprovalAdmin from "../pages/Admin/ApprovalAdmin";
+import Blog from "../pages/Admin/Blog";
 
 export {
   Login,
@@ -37,5 +40,8 @@ export {
   Events,
   Payout,
   Approval,
-  HistoryOrganizer
+  HistoryOrganizer,
+  EventAdmin,
+  ApprovalAdmin,
+  Blog
 };

@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { BsDatabaseExclamation } from "react-icons/bs";
 
 export const postsApi = createApi({
   reducerPath: "postsApi",
@@ -298,10 +299,66 @@ export const postsApi = createApi({
         body: {},
       }),
     }),
+    getEventAdmin:builder.query({
+      query:(city)=>({
+       url:`/event/filter?city=${city}`,
+       method:"GET"
+      }),
+    }),
+    getOrganizerData:builder.query({
+      query:()=>({
+       url:"/api/v1/admin/organizer-apply-data",
+       method:"GET"
+      })
+    }), getEventData:builder.query({
+      query:()=>({
+       url:"/api/v1/admin/event-data",
+       method:"GET"
+      })
+    }),
+    organizerApproval:builder.query({
+      query:({email,status})=>({
+        url:`/api/v1/admin/organizer-approval?email=${email}&status=${status}`,
+        method:"GET"
+      })
+    }),
+    eventApproval:builder.query({
+      query:({uuid,status})=>({
+        url:`/api/v1/admin/event-approval?eventUuid=${uuid}&status=${status}`,
+        method:"GET"
+      })
+    }),
+    adminBlogView: builder.mutation({
+      query: (data) => ({
+        url: "/blog/update",
+        method: "PUT",
+        body: data
+      })
+    }),
+    
+    organizerPayment:builder.query({
+      query:(eventUuid)=>({
+        url:`/api/payment/organizer-payment-intent?eventUuid=${eventUuid}`,
+        method:"GET"
+      })
+    }),
+
+    getOrganizerPayment: builder.query({
+      query: (uuid) => 
+        `/api/payment/organizer-get-payment?eventUuid=${uuid}`
+    }),
+
   }),
 });
 
 export const {
+  useGetOrganizerPaymentQuery,
+  useOrganizerPaymentQuery,
+  useEventApprovalQuery,
+  useOrganizerApprovalQuery,
+  useGetEventDataQuery,
+  useGetOrganizerDataQuery,
+  useGetEventAdminQuery,
   useUpdateEventMutation,
   useGetApprovalDashboardQuery,
   useCancelEventMutation,
@@ -336,4 +393,5 @@ export const {
   useBuyDataMutation,
   useRefundMutation,
   useGetUserHistoryMutation,
+  useAdminBlogViewMutation
 } = postsApi;

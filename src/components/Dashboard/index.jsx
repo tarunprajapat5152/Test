@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { Row, Col, Offcanvas } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
@@ -16,11 +16,30 @@ import { Link } from "react-router-dom";
 import { BsList } from "react-icons/bs";
 import SideOffcanvas from "../SideOffcanvas";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import {toast} from "react-toastify"
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("Events");
   const [show, setShow] = useState(false);
+  const token = localStorage.getItem("token");
+  const [role,setRole]=useState("");
+
+    useEffect(() => {
+      if (token) {
+        try {
+          const decodedToken = jwtDecode(token);
+          setRole(decodedToken.role);
+        } catch (error) {
+          console.error("Token decoding failed:", error);
+        }
+      } else {
+        toast.warn("Please login first");
+        navigate("/login");
+      }
+    }, []);
+
   return (
     <>
       <div>
@@ -35,7 +54,8 @@ const Dashboard = () => {
               </div>{" "}
               Dashboard
             </h4>
-            <NavLink
+            <div className={`flex-column gap-4 ${role == "ORGANIZER" ? "d-flex" : "d-none"}`}>
+              <NavLink
               to="/eventOrganizer"
               className={({ isActive }) =>
                 `style-hover fw-medium rounded-3 fs-6 me-sm-3 p-2 links fw-medium d-flex justify-content-between text-decoration-none ${
@@ -140,8 +160,10 @@ const Dashboard = () => {
               </div>{" "}
               <div></div>
             </NavLink>
+            </div>
+            <div className={`flex-column gap-4 ${role == "ADMIN" ? "d-flex" : "d-none"}`}>
             <NavLink
-              to="/"
+              to="/overviewadmin"
               className={({ isActive }) =>
                 `style-hover fw-medium rounded-3 fs-6 me-sm-3 p-2 links fw-medium d-flex justify-content-between text-decoration-none ${
                   isActive
@@ -150,17 +172,124 @@ const Dashboard = () => {
                 }`
               }
               onClick={() => {
-                setActiveTab("/");
+                setActiveTab("overviewAdmin");
+              }}
+            >
+              <div className="d-flex flex-row gap-2 align-items-center">
+                <div className="d-flex align-items-center">
+                  <MdOutlinePayments />
+                </div>
+                Overview
+              </div>{" "}
+              <div></div>
+            </NavLink>
+              <NavLink
+              to="/eventadmin"
+              className={({ isActive }) =>
+                `style-hover fw-medium rounded-3 fs-6 me-sm-3 p-2 links fw-medium d-flex justify-content-between text-decoration-none ${
+                  isActive
+                    ? "text-white bg-whole fw-bold"
+                    : "custom-style text-dark bg-grey"
+                }`
+              }
+              onClick={() => {
+                setActiveTab("eventAdmin");
+              }}
+            >
+              <div className="d-flex flex-row gap-2 align-items-center">
+                <div className="d-flex align-items-center">
+                  <MdOutlineEmojiEvents />
+                </div>
+                Events
+              </div>{" "}
+              <div></div>
+            </NavLink>
+            <NavLink
+              to="/approvaladmin"
+              className={({ isActive }) =>
+                `style-hover fw-medium rounded-3 fs-6 me-sm-3 p-2 links fw-medium d-flex justify-content-between text-decoration-none ${
+                  isActive
+                    ? "text-white bg-whole fw-bold"
+                    : "custom-style text-dark bg-grey"
+                }`
+              }
+              onClick={() => {
+                setActiveTab("approvalAdmin");
+              }}
+            >
+              <div className="d-flex flex-row gap-2 align-items-center">
+                <div className="d-flex align-items-center">
+                  <VscUnverified />
+                </div>
+                Approval
+              </div>{" "}
+              <div></div>
+            </NavLink>
+            <NavLink
+              to="/blog"
+              className={({ isActive }) =>
+                `style-hover fw-medium rounded-3 fs-6 me-sm-3 p-2 links fw-medium d-flex justify-content-between text-decoration-none ${
+                  isActive
+                    ? "text-white bg-whole fw-bold"
+                    : "custom-style text-dark bg-grey"
+                }`
+              }
+              onClick={() => {
+                setActiveTab("blog");
+              }}
+            >
+              <div className="d-flex flex-row gap-2 align-items-center">
+                <div className="d-flex align-items-center">
+                  <MdOutlineAddTask />
+                </div>
+                Blogs
+              </div>{" "}
+              <div></div>
+            </NavLink>
+            <NavLink
+              to="/historyAdmin"
+              className={({ isActive }) =>
+                `style-hover fw-medium rounded-3 fs-6 me-sm-3 p-2 links fw-medium d-flex justify-content-between text-decoration-none ${
+                  isActive
+                    ? "text-white bg-whole fw-bold"
+                    : "custom-style text-dark bg-grey"
+                }`
+              }
+              onClick={() => {
+                setActiveTab("historyAdmin");
+              }}
+            >
+              <div className="d-flex flex-row gap-2 align-items-center">
+                <div className="d-flex align-items-center">
+                  <LuHistory />
+                </div>
+                History
+              </div>{" "}
+              <div></div>
+            </NavLink>
+           
+            <NavLink
+              to="placesadmin"
+              className={({ isActive }) =>
+                `style-hover fw-medium rounded-3 fs-6 me-sm-3 p-2 links fw-medium d-flex justify-content-between text-decoration-none ${
+                  isActive
+                    ? "text-white bg-whole fw-bold"
+                    : "custom-style text-dark bg-grey"
+                }`
+              }
+              onClick={() => {
+                setActiveTab("placesadmin");
               }}
             >
               <div className="d-flex flex-row gap-2 align-items-center">
                 <div className="d-flex align-items-center">
                   <CiBank />
                 </div>
-                Bank Details
+                Places
               </div>{" "}
               <div></div>
             </NavLink>
+            </div>
           </Col>
           <Col xs={12} lg={10}>
             <div className="d-flex justify-content-center postion-sticky top-0">

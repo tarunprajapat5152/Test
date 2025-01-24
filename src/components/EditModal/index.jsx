@@ -91,7 +91,7 @@ function EditModal({ show, setShow, selectedItem }) {
     <>
       <Modal show={show} onHide={() => setShow(false)} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Event Information</Modal.Title>
+          <Modal.Title>Event Information</                                              Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={formik.handleSubmit}>

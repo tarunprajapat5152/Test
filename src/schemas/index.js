@@ -166,3 +166,12 @@ export const editModal = Yup.object({
     .required("please enter valid event name")
     .min(10),
 });
+
+export const blogUpdate = Yup.object({
+  name: Yup.string()
+  .min(2, "please enter coorect name")
+  .max(25, "you caant enter grather than 25 char")
+  .required("name is requried"),
+  date: Yup.date()
+  .required("date is required")
+})
