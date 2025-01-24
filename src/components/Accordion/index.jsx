@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import { BsTicket } from "react-icons/bs";
 import Input from "../Input";
 import Select from "../Select";
 import { useRegisterFilterQuery } from "../../services/services";
+import { use } from "react";
 
 function Accordionn({ formik }) {
   // console.log(formik);
 
   // const citys = ["Khategaon", "Indore", "Bhopal", "Mumbai"];
   const { data } = useRegisterFilterQuery();
+  
   const filteredVenues = data?.filter(
     (item) => item.city === formik.values.city
   );
@@ -21,7 +23,12 @@ function Accordionn({ formik }) {
       formik?.values?.venueName?.toLowerCase()
   );
 
-  console.log("helloooo",selectedVenue?.capacity);
+  useEffect(() => {
+    formik.setFieldValue("rentalCost", selectedVenue?.rentalCost);
+    formik.setFieldValue("capacity", selectedVenue?.capacity);
+    formik.setFieldValue("placeUuid", selectedVenue?.placeUuid);
+
+  }, [selectedVenue]);
   
   // console.log("selectedVenue--", selectedVenue);
 
@@ -57,7 +64,7 @@ function Accordionn({ formik }) {
                 name="capacity"
                 type="number"
                 formik={formik}
-                value={selectedVenue?.capacity || " "}
+                value={selectedVenue?.capacity || ""}
                 placeholder="Capacity"
                 bg="bg-body-secondary"
                 label="Capacity"
@@ -72,6 +79,14 @@ function Accordionn({ formik }) {
                 bg="bg-body-secondary"
                 label="RentalCost"
                 readOnly="readOnly"
+              />
+              <Input
+                name="placeUuid"
+                type="number"
+                formik={formik}
+                value={selectedVenue?.placeUuid || " "}
+                placeholder="placeUuid"
+                bg="d-none"
               />
             </div>
           )}
@@ -141,7 +156,7 @@ function Accordionn({ formik }) {
                 formik={formik}
                 placeholder="00"
                 bg="bg-body-secondary"
-                label="Price $"
+                label="Price rs"
               />
             </Col>
           </Row>

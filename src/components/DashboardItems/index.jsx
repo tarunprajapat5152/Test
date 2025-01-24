@@ -29,17 +29,19 @@ const DashboardItems = ({
     skip: !eventUuid,
   });
 
-  const { data } = useGetOrganizerPaymentQuery({ uuid },{skip: !uuid, }
+  const { data } = useGetOrganizerPaymentQuery( uuid ,{skip: !uuid, }
   );
   if(data){
     window.location.href = data.paymentUrl;
     localStorage.setItem("sessionId",data.sessionId);
+    localStorage.setItem("key","get-payment")
   }
 
   useEffect(() => {
     if (response) {
       window.location.href=response?.paymentUrl
       localStorage.setItem("sessionId",response?.sessionId)
+      localStorage.setItem("key","event-payment")
     }
   }, [response, error, eventUuid]);
 

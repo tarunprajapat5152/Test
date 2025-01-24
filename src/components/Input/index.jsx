@@ -18,7 +18,7 @@ const Input = ({ name, type, formik, value,  placeholder, id, icon,disabled=fals
         {label? <label htmlFor="label">{label}</label>:""}
         <div className={`d-flex mb-3 flex-row ${bg} rounded-3`}>
           <span className='py-1 my-1 ps-3 pe-1'>{icon}</span>
-          {console.log("--------------------",value)}
+          {/* {console.log("--------------------",value)} */}
           <input
             type={type === 'password' && showPassword ? 'text' : type}
             name={name}

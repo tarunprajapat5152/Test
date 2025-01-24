@@ -99,25 +99,29 @@ function Header() {
               >
                 About us
               </NavLink>
-              {role === "ADMIN" || role === "ORGANIZER" ? <NavLink
-                to="/eventOrganizer"
-                className={({ isActive }) =>
-                  `style-hover mx-3 text-decoration-none ${
-                    isActive ? "text-white" : "custom-style"
-                  }`
-                }
-              >
-                Dashboard
-              </NavLink>:<NavLink
-                to="/cart"
-                className={({ isActive }) =>
-                  `style-hover mx-3 text-decoration-none ${
-                    isActive ? "text-white" : "custom-style"
-                  }`
-                }
-              >
-                Cart
-              </NavLink>}
+              {role === "ADMIN" || role === "ORGANIZER" ? (
+                <NavLink
+                  to={role === "ADMIN" ? "/overviewadmin" : "/eventOrganizer"}
+                  className={({ isActive }) =>
+                    `style-hover mx-3 text-decoration-none ${
+                      isActive ? "text-white" : "custom-style"
+                    }`
+                  }
+                >
+                  Dashboard
+                </NavLink>
+              ) : (
+                <NavLink
+                  to="/cart"
+                  className={({ isActive }) =>
+                    `style-hover mx-3 text-decoration-none ${
+                      isActive ? "text-white" : "custom-style"
+                    }`
+                  }
+                >
+                  Cart
+                </NavLink>
+              )}
               {!token ? (
                 <Button
                   className="ms-4"

@@ -17,11 +17,16 @@ import { BsList } from "react-icons/bs";
 import SideOffcanvas from "../SideOffcanvas";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+<<<<<<< HEAD
 import {toast} from "react-toastify"
+=======
+import { useLocation } from "react-router-dom";
+>>>>>>> 02b629cd91e0ad39b3e8534f225982c77e940d23
 
 const Dashboard = () => {
+  const location=useLocation();
+  const lastPathSegment = location.pathname.split("/").filter(Boolean).pop();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("Events");
   const [show, setShow] = useState(false);
   const token = localStorage.getItem("token");
   const [role,setRole]=useState("");
@@ -64,9 +69,6 @@ const Dashboard = () => {
                     : "custom-style text-dark bg-grey"
                 }`
               }
-              onClick={() => {
-                setActiveTab("eventOrganizer");
-              }}
             >
               <div className="d-flex flex-row gap-2 align-items-center">
                 <div className="d-flex align-items-center">
@@ -85,9 +87,7 @@ const Dashboard = () => {
                     : "custom-style text-dark bg-grey"
                 }`
               }
-              onClick={() => {
-                setActiveTab("approval");
-              }}
+
             >
               <div className="d-flex flex-row gap-2 align-items-center">
                 <div className="d-flex align-items-center">
@@ -106,9 +106,7 @@ const Dashboard = () => {
                     : "custom-style text-dark bg-grey"
                 }`
               }
-              onClick={() => {
-                setActiveTab("addEvent");
-              }}
+
             >
               <div className="d-flex flex-row gap-2 align-items-center">
                 <div className="d-flex align-items-center">
@@ -127,9 +125,7 @@ const Dashboard = () => {
                     : "custom-style text-dark bg-grey"
                 }`
               }
-              onClick={() => {
-                setActiveTab("historyOrganizer");
-              }}
+              
             >
               <div className="d-flex flex-row gap-2 align-items-center">
                 <div className="d-flex align-items-center">
@@ -148,9 +144,7 @@ const Dashboard = () => {
                     : "custom-style text-dark bg-grey"
                 }`
               }
-              onClick={() => {
-                setActiveTab("payout");
-              }}
+
             >
               <div className="d-flex flex-row gap-2 align-items-center">
                 <div className="d-flex align-items-center">
@@ -164,6 +158,8 @@ const Dashboard = () => {
             <div className={`flex-column gap-4 ${role == "ADMIN" ? "d-flex" : "d-none"}`}>
             <NavLink
               to="/overviewadmin"
+<<<<<<< HEAD
+=======
               className={({ isActive }) =>
                 `style-hover fw-medium rounded-3 fs-6 me-sm-3 p-2 links fw-medium d-flex justify-content-between text-decoration-none ${
                   isActive
@@ -171,6 +167,104 @@ const Dashboard = () => {
                     : "custom-style text-dark bg-grey"
                 }`
               }
+       
+            >
+              <div className="d-flex flex-row gap-2 align-items-center">
+                <div className="d-flex align-items-center">
+                  <MdOutlinePayments />
+                </div>
+                Overview
+              </div>{" "}
+              <div></div>
+            </NavLink>
+              <NavLink
+              to="/eventsadmin"
+              className={({ isActive }) =>
+                `style-hover fw-medium rounded-3 fs-6 me-sm-3 p-2 links fw-medium d-flex justify-content-between text-decoration-none ${
+                  isActive
+                    ? "text-white bg-whole fw-bold"
+                    : "custom-style text-dark bg-grey"
+                }`
+              }
+
+            >
+              <div className="d-flex flex-row gap-2 align-items-center">
+                <div className="d-flex align-items-center">
+                  <MdOutlineEmojiEvents />
+                </div>
+                Events
+              </div>{" "}
+              <div></div>
+            </NavLink>
+            <NavLink
+              to="/approvaladmin"
+              className={({ isActive }) =>
+                `style-hover fw-medium rounded-3 fs-6 me-sm-3 p-2 links fw-medium d-flex justify-content-between text-decoration-none ${
+                  isActive
+                    ? "text-white bg-whole fw-bold"
+                    : "custom-style text-dark bg-grey"
+                }`
+              }
+
+            >
+              <div className="d-flex flex-row gap-2 align-items-center">
+                <div className="d-flex align-items-center">
+                  <VscUnverified />
+                </div>
+                Approval
+              </div>{" "}
+              <div></div>
+            </NavLink>
+            <NavLink
+              to="/blog"
+              className={({ isActive }) =>
+                `style-hover fw-medium rounded-3 fs-6 me-sm-3 p-2 links fw-medium d-flex justify-content-between text-decoration-none ${
+                  isActive
+                    ? "text-white bg-whole fw-bold"
+                    : "custom-style text-dark bg-grey"
+                }`
+              }
+
+            >
+              <div className="d-flex flex-row gap-2 align-items-center">
+                <div className="d-flex align-items-center">
+                  <MdOutlineAddTask />
+                </div>
+                Blogs
+              </div>{" "}
+              <div></div>
+            </NavLink>
+            <NavLink
+              to="/historyAdmin"
+              className={({ isActive }) =>
+                `style-hover fw-medium rounded-3 fs-6 me-sm-3 p-2 links fw-medium d-flex justify-content-between text-decoration-none ${
+                  isActive
+                    ? "text-white bg-whole fw-bold"
+                    : "custom-style text-dark bg-grey"
+                }`
+              }
+
+            >
+              <div className="d-flex flex-row gap-2 align-items-center">
+                <div className="d-flex align-items-center">
+                  <LuHistory />
+                </div>
+                History
+              </div>{" "}
+              <div></div>
+            </NavLink>
+           
+            <NavLink
+              to="/placesadmin"
+>>>>>>> 02b629cd91e0ad39b3e8534f225982c77e940d23
+              className={({ isActive }) =>
+                `style-hover fw-medium rounded-3 fs-6 me-sm-3 p-2 links fw-medium d-flex justify-content-between text-decoration-none ${
+                  isActive
+                    ? "text-white bg-whole fw-bold"
+                    : "custom-style text-dark bg-grey"
+                }`
+              }
+<<<<<<< HEAD
               onClick={() => {
                 setActiveTab("overviewAdmin");
               }}
@@ -280,6 +374,8 @@ const Dashboard = () => {
               onClick={() => {
                 setActiveTab("placesadmin");
               }}
+=======
+>>>>>>> 02b629cd91e0ad39b3e8534f225982c77e940d23
             >
               <div className="d-flex flex-row gap-2 align-items-center">
                 <div className="d-flex align-items-center">
@@ -302,7 +398,7 @@ const Dashboard = () => {
                   <Breadcrumb.Item>
                     <Link to="/">Home</Link>
                   </Breadcrumb.Item>
-                  <Breadcrumb.Item active>{activeTab}</Breadcrumb.Item>
+                  <Breadcrumb.Item active>{lastPathSegment}</Breadcrumb.Item>
                 </Breadcrumb>
                 <div>
                   {" "}

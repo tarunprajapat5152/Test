@@ -50,7 +50,7 @@ export const Profile = ({ show, setShow }) => {
     fetchData();
   }, []);
   
-  // const handleClose = () => setShow(false);
+   const handleClose = () => setShow(false);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -92,6 +92,7 @@ export const Profile = ({ show, setShow }) => {
       if (response.status === 200) {
         setUserInfo([values.firstName, values.lastName, values.phoneOrEmail]);
         toast.success(response.message);
+        handleClose();
       } else {
         toast.error(response.message);
       }
@@ -142,7 +143,7 @@ export const Profile = ({ show, setShow }) => {
                   />
                   <label
                     htmlFor="profilePic"
-                    className={`position-absolute bottom-0 end-0 crs me-4 pe-3 pb-1 mb-1 ${
+                    className={`position-absolute bottom-0 end-0 crs pe-3 pb-1 mb-1 ${
                       isEditable ? "" : "disabled"
                     }`}
                   >

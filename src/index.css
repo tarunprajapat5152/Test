@@ -5,7 +5,7 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 body {
-  height: 100vh;
+  height: 100%;
   background-color: #f8f9fa !important;
 }
 #bg-linear {
@@ -52,6 +52,10 @@ input:focus {
 .otp-field {
   width: 55px !important;
   height: 55px !important;
+}
+.custom-card {
+  background-color: #f0f0f0; 
+  box-shadow: none;
 }
 .Toastify__close-button {
   color: white !important;
@@ -195,11 +199,15 @@ li{
   overflow-x: hidden;
   overflow-y: scroll;
 }
-.scroll::-webkit-scrollbar {
+.scroll::-webkit-scrollbar { 
   display: none;
 }
 .forhght,.forheight{
+<<<<<<< HEAD
   height: 75vh !important;
+=======
+   height: 80vh !important;
+>>>>>>> 02b629cd91e0ad39b3e8534f225982c77e940d23
 }
 @media (max-width: 991.98px) {
   .scroll {
@@ -264,5 +272,9 @@ li{
 }fade{
   padding-left: 0px !important;
 }.vh-75{
+<<<<<<< HEAD
   height:88vh !important;
+=======
+  height:calc(100vh - 150px) !important;
+>>>>>>> 02b629cd91e0ad39b3e8534f225982c77e940d23
 }

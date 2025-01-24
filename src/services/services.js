@@ -5,6 +5,13 @@ export const postsApi = createApi({
   reducerPath: "postsApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://event-management-t96y.onrender.com",
+    // prepareHeaders: (headers) => {
+    //   const token = localStorage.getItem('token');
+    //   if (token) {
+    //     headers.set("authorization", `Bearer ${token}`);
+    //   }
+    //   return headers;
+    // },
   }),
   endpoints: (builder) => ({
     getOtp: builder.mutation({
@@ -173,10 +180,11 @@ export const postsApi = createApi({
     }),
 
     creareEvent: builder.mutation({
-      query: (formData) => ({
+      query: (formData, placeUuid) => ({
         url: "/event/create-event",
         method: "POST",
         body: formData,
+        placeUuid,
       }),
     }),
 
@@ -293,12 +301,16 @@ export const postsApi = createApi({
     }),
 
     cancelEvent: builder.mutation({
-      query: () => ({
+      query: ({ eventUuid, description }) => ({
         url: "/event/cancel",
         method: "POST",
-        body: {},
+        body: {
+          eventUuid,
+          description,
+        },
       }),
     }),
+<<<<<<< HEAD
     getEventAdmin:builder.query({
       query:(city)=>({
        url:`/event/filter?city=${city}`,
@@ -327,11 +339,73 @@ export const postsApi = createApi({
         url:`/api/v1/admin/event-approval?eventUuid=${uuid}&status=${status}`,
         method:"GET"
       })
+=======
+
+    organizerHistory: builder.query({
+      query: ({ email, status }) => ({
+        url: `/event/payout?email=${email}&status=${status}`,
+        method: "GET",
+      }),
+    }),
+
+    organizerPayment: builder.query({
+      query: (eventUuid) => ({
+        url: `/api/payment/organizer-payment-intent?eventUuid=${eventUuid}`,
+        method: "GET",
+      }),
+    }),
+
+    organizerSuccess: builder.query({
+      query: (sessionId) => ({
+        url: `/api/payment/organizer-success?sessionId=${sessionId}`,
+        method: "GET",
+      }),
+    }),
+
+    getPayoutEvent: builder.query({
+      query: ({ email = "", status = "" }) =>
+        `/event/payout?email=${email}&status=${status}`,
+    }),
+    getEventAdmin: builder.query({
+      query: (city) => ({
+        url: `/event/filter?city=${city}`,
+        method: "GET",
+      }),
+    }),
+    getOrganizerData: builder.query({
+      query: () => ({
+        url: "/api/v1/admin/organizer-apply-data",
+        method: "GET",
+      }),
+    }),
+    getEventData: builder.query({
+      query: () => ({
+        url: "/api/v1/admin/event-data",
+        method: "GET",
+      }),
+    }),
+    organizerApproval: builder.query({
+      query: ({ email, status }) => ({
+        url: `/api/v1/admin/organizer-approval?email=${email}&status=${status}`,
+        method: "GET",
+      }),
+    }),
+    eventApproval: builder.query({
+      query: ({ uuid, status }) => ({
+        url: `/api/v1/admin/event-approval?eventUuid=${uuid}&status=${status}`,
+        method: "GET",
+      }),
+    }),
+    getOrganizerHistory: builder.query({
+      query: ({ status = "" }) =>
+        `/api/payment/organizer-event-history?status=${status}`,
+>>>>>>> 02b629cd91e0ad39b3e8534f225982c77e940d23
     }),
     adminBlogView: builder.mutation({
       query: (data) => ({
         url: "/blog/update",
         method: "PUT",
+<<<<<<< HEAD
         body: data
       })
     }),
@@ -341,24 +415,71 @@ export const postsApi = createApi({
         url:`/api/payment/organizer-payment-intent?eventUuid=${eventUuid}`,
         method:"GET"
       })
+=======
+        body: data,
+      }),
+>>>>>>> 02b629cd91e0ad39b3e8534f225982c77e940d23
     }),
 
     getOrganizerPayment: builder.query({
       query: (uuid) => 
         `/api/payment/organizer-get-payment?eventUuid=${uuid}`
     }),
+<<<<<<< HEAD
 
+=======
+    getOrganizerPaymentSuccess:builder.query({
+      query:(sessionId) =>
+        `api/payment/organizer-get-payment-success?sessionId=${sessionId}`
+    }),
+
+
+    addNewPlace:builder.mutation({
+      query:(data)=>({
+        url:"/register-place/add-place",
+        method:"POST",
+        body:data
+      }),
+      
+    }),
+    viewPayment: builder.query({
+      query: ({placeUuid=''}) => 
+        `/api/payment/place-payment-data?placeUuid=${placeUuid}`
+    }),
+    unPaidPayment: builder.query({
+      query: ({placeUuid=''}) => 
+        `/api/payment/place-payment-all?placeUuid=${placeUuid}`
+    }),
+    getTotalPayment:builder.query({
+      query: () => "/api/payment/event-overview",
+    }),
+>>>>>>> 02b629cd91e0ad39b3e8534f225982c77e940d23
   }),
 });
 
 export const {
+<<<<<<< HEAD
   useGetOrganizerPaymentQuery,
   useOrganizerPaymentQuery,
+=======
+  useViewPaymentQuery,
+  useUnPaidPaymentQuery,
+  useGetTotalPaymentQuery,
+  useAddNewPlaceMutation,
+  useGetOrganizerPaymentSuccessQuery,
+  useGetOrganizerHistoryQuery,
+  useGetEventAdminQuery,
+>>>>>>> 02b629cd91e0ad39b3e8534f225982c77e940d23
   useEventApprovalQuery,
   useOrganizerApprovalQuery,
   useGetEventDataQuery,
   useGetOrganizerDataQuery,
+<<<<<<< HEAD
   useGetEventAdminQuery,
+=======
+  useGetPayoutEventQuery,
+  useGetOrganizerPaymentQuery,
+>>>>>>> 02b629cd91e0ad39b3e8534f225982c77e940d23
   useUpdateEventMutation,
   useGetApprovalDashboardQuery,
   useCancelEventMutation,
@@ -393,5 +514,11 @@ export const {
   useBuyDataMutation,
   useRefundMutation,
   useGetUserHistoryMutation,
+<<<<<<< HEAD
+=======
+  useOrganizerHistoryQuery,
+  useOrganizerPaymentQuery,
+  useOrganizerSuccessQuery,
+>>>>>>> 02b629cd91e0ad39b3e8534f225982c77e940d23
   useAdminBlogViewMutation
 } = postsApi;

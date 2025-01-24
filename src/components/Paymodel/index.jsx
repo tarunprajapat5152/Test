@@ -33,26 +33,26 @@ const Paymodal = ({
       <Modal.Body>
         <Card>
           <Card.Body className="row">
-            <div className="col-12 col-lg-5 d-flex justify-content-center mb-3 mb-md-0">
+            <div className="col-12 col-lg-6 d-flex justify-content-center mb-3 mb-md-0">
               <Card.Img
                 variant="top"
                 src={event.imageUrl}
-                className="w-100 h-auto"
+                className="w-100 h-auto rounded"
               />
             </div>
 
-            <div className="col-12 col-lg-7 mt-2">
+            <div className="col-12 col-lg-6 mt-2">
               <Card.Title className="text-color fs-6 fw-bold">
                 {event.eventName}
               </Card.Title>
               <Card.Text>{event.eventDetails}</Card.Text>
 
               <div>
-                <FaMapMarkerAlt className="me-1" /> {event.placeAddress},{" "}
+                <FaMapMarkerAlt className="me-1 text-color" /> {event.placeAddress},{" "}
                 {event.city}
               </div>
               <div className="d-flex align-items-center mt-2">
-                <MdDateRange className="me-1" /> {event.startDate} to{" "}
+                <MdDateRange className="me-1 text-black" /> {event.startDate} to{" "}
                 {event.endDate}
               </div>
 

@@ -7,6 +7,7 @@ import { jwtDecode } from "jwt-decode";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
+import DetailsModal from '../../../components/DetailsModal'
 import { format } from "date-fns";
 import {
   useGetSelectedEventQuery,
@@ -19,10 +20,11 @@ import EventCard from "../EventCart";
 import { Loader } from "../../../components/Loader";
 import { Error } from "../../user/Error";
 import { toast } from "react-toastify";
-// import '../style.css';
+import './style.css';
 
 export const Event = () => {
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
   const [eventFilter, setEventFilter] = useState({
     eventName: "",
     category: "",
@@ -42,12 +44,14 @@ export const Event = () => {
   const { data: placeData, isLoading: isPlaceLoading } = useGetPlaceQuery();
   const [cartData] = useAddCartDataMutation();
   const [buyData] = useBuyDataMutation();
+  const [disableBtn , setDisableBtn] = useState(true);
+  const [showModal2, setShowModal2] = useState(false); 
+  
 
   const [dateRangeState, setDateRangeState] = useState({
     startDate: null,
     endDate: null,
   });
-
   const calendarRef = useRef(null);
   const inputRef = useRef(null);
   useEffect(() => {
@@ -74,9 +78,9 @@ export const Event = () => {
     setSelectedDates([startDate, endDate]);
     setFieldValue("startDate", formattedStartDate);
     setFieldValue("endDate", formattedEndDate);
-    if (ranges.selection.endDate !== ranges.selection.startDate) {
+ 
       submitForm();
-    }
+    
     setDateRangeState({
       startDate: ranges.selection.startDate,
       endDate: ranges.selection.endDate,
@@ -90,12 +94,21 @@ export const Event = () => {
     const token = localStorage.getItem("token");
     if (token) {
       setEmail(jwtDecode(token).sub);
+      setRole(jwtDecode(token).role);
+      console.log(jwtDecode(token).role);
       setCheckEmail(true);
     } else {
       setCheckEmail(false);
     }
+    
   }, []);
 
+  useEffect(() => {
+    if (role === 'USER') {
+      setDisableBtn(false);
+    }
+  }, [role]);
+  
   useEffect(() => {
     if (placeData) {
       const cities = [];
@@ -114,7 +127,7 @@ export const Event = () => {
   };
   const handleAddToCart = async (event) => {
     if (checkEmail === false) {
-      // navigate("/");
+       navigate("/");
     } else {
       try {
         const res = await cartData({
@@ -132,9 +145,15 @@ export const Event = () => {
       }
     }
   };
+  const handleInfoClick = (event) => { 
+    setSelectedEvent(event); 
+    setShowModal2(true); 
+  };
+  
   const handleBuyNow = (event) => {
     setSelectedEvent(event);
     setShowModal(true);
+    setQuantity(1)
   };
   const handleConfirmPurchase = async () => {
     if (selectedEvent) {
@@ -178,6 +197,8 @@ export const Event = () => {
                   handleAddToCart={handleAddToCart}
                   handleBuyNow={handleBuyNow}
                   formatDateToLocal={formatDateToLocal}
+                  handleInfoClick={handleInfoClick}
+                  disableBtn={disableBtn}
                 />
               </Col>
             ))}
@@ -208,10 +229,7 @@ export const Event = () => {
           {({ values, handleChange, submitForm, setFieldValue }) => (
             <FormikForm>
               <Row className="justify-content-md-evenly justify-content-center my-4 pe-xl-5">
-                <Col
-                  md={2}
-                  className="px-0 mb-2 d-flex justify-content-center mt-2 pt-1 align-items-center"
-                >
+                <Col md={2} xl={1} className="px-0 mb-2 d-flex justify-content-center mt-2 pt-1 align-items-center">
                   <h1 className="ms-md-4 ms-lg-0 fs-3 text-color fw-bold">
                     Upcoming Events
                   </h1>
@@ -240,12 +258,7 @@ export const Event = () => {
                     </div>
                   </Form.Group>
                 </Col>
-                <Col
-                  md={2}
-                  lg={2}
-                  xl={1}
-                  className="pt-1 px-md-2 px-xl-0 px-sm-5"
-                >
+                <Col md={2} lg={2} xl={2} className="pt-1 px-md-2 px-xl-0 px-sm-5">
                   <Field
                     as="select"
                     className="p-2 rounded-pill form-select mt-md-2 fs-7 bg-grey form-control-custom"
@@ -264,12 +277,7 @@ export const Event = () => {
                     ))}
                   </Field>
                 </Col>
-                <Col
-                  md={2}
-                  lg={2}
-                  xl={1}
-                  className="pt-1 px-md-2 px-xl-0 px-sm-5"
-                >
+                <Col md={2} lg={2} xl={2} className="pt-1 px-md-2 px-xl-0 px-sm-5">
                   <Field
                     as="select"
                     className="p-2 rounded-pill form-select mb-1 mt-2 bg-grey fs-7 form-control-custom"
@@ -287,23 +295,17 @@ export const Event = () => {
                     <option value="sports">Sports</option>
                   </Field>
                 </Col>
-                <Col
-                  sm={12}
-                  md={2}
-                  xl={1}
-                  className="pt-1 px-md-2 px-sm-5 mt-2 "
-                >
-                  <Form.Group
-                    className="mb-2"
-                    onClick={() => setShowCalendar(!showCalendar)}
-                  >
+                <Col md={3} xl={2} className="pt-1 px-md-2 px-sm-5 mt-2 ">
+                 <div className="d-flex align-items-center justify-content-md-start gap-1">
+                <div>
+                <Form.Group className="mb-2" onClick={() => setShowCalendar(!showCalendar)} >
                     <div
                       ref={inputRef}
                       className="input-group-custom rounded-pill px-1 py-1 border d-flex align-items-center bg-grey"
                     >
-                      <Form.Control
-                        type="text"
+                      <Form.Control type="text"
                         className="form-control p-1 fs-7 bg-grey border-0"
+                        readOnly
                         placeholder="Select Dates"
                         value={
                           selectedDates.length > 0 &&
@@ -339,25 +341,16 @@ export const Event = () => {
                       />
                     </div>
                   )}
-                </Col>
-                <Col
-                  sm={1}
-                  className="p-0 d-flex justify-content-end me-5 pe- me-md-0 justify-content-md-center align-items-center mb-4"
-                >
-                  <BsArrowClockwise
-                    size={18}
-                    style={{ fontWeight: "bolder" }}
-                    className="crs fw-bolder"
-                    onClick={() => {
-                      setFieldValue("eventName", "");
-                      setFieldValue("city", "");
-                      setFieldValue("category", "");
-                      setFieldValue("startDate", undefined);
-                      setFieldValue("endDate", undefined);
-                      setSelectedDates([]);
-                      submitForm();
-                    }}
-                  />
+                </div>
+                 <div>
+                 <BsArrowClockwise size={18}
+                          style={{ fontWeight: 'bolder'}}
+                          className="crs fw-bolder mb-2"
+                          onClick={() => {setFieldValue("eventName", '');setFieldValue("city", '');setFieldValue("category", '');setFieldValue("startDate", undefined);setFieldValue("endDate", undefined);setSelectedDates([]);submitForm();
+                          }}
+                          />
+                 </div>
+                 </div>
                 </Col>
               </Row>
             </FormikForm>
@@ -377,8 +370,11 @@ export const Event = () => {
           handleConfirmPurchase={handleConfirmPurchase}
         />
       )}
+      {selectedEvent && ( 
+        <DetailsModal selectedItem={selectedEvent} 
+        show={showModal2} setShow={setShowModal2} /> )}
     </>
   );
 };
 
-export default Event;
+export default Event

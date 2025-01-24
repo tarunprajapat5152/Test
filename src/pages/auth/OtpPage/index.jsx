@@ -243,7 +243,7 @@ function OtpModal({ showModal, setShowModal, otpData }) {
                       <input
                         {...props}
                         className="form-control text-center otp-field mx-1 otp-width otp-outline border-0 bg-light"
-                        onKeyDown={handleKeyDown}
+                       
                         style={{ color: "black" }}
                       />
                     )}

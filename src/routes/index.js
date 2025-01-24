@@ -17,9 +17,18 @@ import Events from "../pages/organizer/Events";
 import Payout from "../pages/organizer/Payout";
 import Approval from "../pages/organizer/Approval";
 import HistoryOrganizer from "../pages/organizer/History";
+<<<<<<< HEAD
 import EventAdmin from "../pages/Admin/EventAdmin";
 import ApprovalAdmin from "../pages/Admin/ApprovalAdmin";
 import Blog from "../pages/Admin/Blog";
+=======
+import OverviewAdmin from "../pages/admin/OverviewAdmin";
+import Blog from "../pages/admin/Bolg";
+import EventsAdmin from "../pages/admin/EventsAdmin";
+import ApprovalAdmin from "../pages/admin/ApprovalAdmin";
+import HistoryAdmin from "../pages/admin/HistoryAdmin";
+import PlacesAdmin from "../pages/admin/PlacesAdmin";
+>>>>>>> 02b629cd91e0ad39b3e8534f225982c77e940d23
 
 export {
   Login,
@@ -36,12 +45,22 @@ export {
   History,
   Success,
   CreateEvent,
-  Dashboard,
   Events,
+  Dashboard,
   Payout,
   Approval,
   HistoryOrganizer,
+<<<<<<< HEAD
   EventAdmin,
   ApprovalAdmin,
   Blog
+=======
+  OverviewAdmin,
+  Blog,
+  EventsAdmin,
+  ApprovalAdmin,
+  HistoryAdmin,
+  PlacesAdmin
+  
+>>>>>>> 02b629cd91e0ad39b3e8534f225982c77e940d23
 };

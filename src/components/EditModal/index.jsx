@@ -33,12 +33,12 @@ function EditModal({ show, setShow, selectedItem }) {
   }
 
  
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setProfilePic(file);
-    }
-  };
+  // const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     setProfilePic(file);
+  //   }
+  // };
 
   const formik = useFormik({
     initialValues: {
@@ -57,22 +57,21 @@ function EditModal({ show, setShow, selectedItem }) {
               uuid: selectedItem.uuid,
               eventName: values.event_name,
               eventDetails: values.event_details,
-              maxTicket: 99,
+              maxTicket: value,
             }),
           ],
           { type: "application/json" }
         )
       );
 
-      if (profilePic) {
-        formfile.append("file", profilePic);
-      }
+      // if (profilePic) {
+      //   formfile.append("file", profilePic);
+      // }
 
       try {
         const res = await updateEvent(formfile).unwrap();
         if (
-          res.status === "Event details updated successfully." ||
-          res.status == "Both event details and image updated successfully."
+          res.status === "Event details updated successfully." 
         ) {
           setUpdate(true);
           setShow(false);
@@ -131,16 +130,6 @@ function EditModal({ show, setShow, selectedItem }) {
                         +
                       </button>
                     </div>
-                  </Col>
-                  <Col xs={12} sm={6} className="mb-2 d">
-                    {" "}
-                    <input
-                      type="file"
-                      id="profilePic"
-                      style={{ display: "block" }}
-                      onChange={handleImageChange}
-                      accept="image/*"
-                    />
                   </Col>
                 </Row>
               </Col>

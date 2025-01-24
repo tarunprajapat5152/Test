@@ -9,11 +9,19 @@ import { toast } from "react-toastify";
 
 const Approval = () => {
   const [loading, setLoading] = useState(true);
+<<<<<<< HEAD
   const { update, setUpdate } = useContext(AppContext);
+=======
+>>>>>>> 02b629cd91e0ad39b3e8534f225982c77e940d23
   const [status, setStatus] = useState("Approved");
   const [eventData, setEventData] = useState([]);
   const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
+<<<<<<< HEAD
+=======
+  
+  const { update, setUpdate } = useContext(AppContext);
+>>>>>>> 02b629cd91e0ad39b3e8534f225982c77e940d23
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
@@ -70,6 +78,9 @@ const Approval = () => {
     refetch(); 
   };
 
+  console.log("edddddddddddd-",eventData);
+  
+
   return (
     <div className="d-flex justify-content-center">
       <div style={{ width: "92%" }} className="forheight scroll">
@@ -117,6 +128,10 @@ const Approval = () => {
                   sm={6}
                   lg={4}
                   xs={12}
+<<<<<<< HEAD
+=======
+                  xl={3}
+>>>>>>> 02b629cd91e0ad39b3e8534f225982c77e940d23
                   className="m-auto m-sm-0 px-1 py-2"
                   key={event.eventUuid}
                 >
