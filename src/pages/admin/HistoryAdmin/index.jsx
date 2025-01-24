@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { useGetOrganizerHistoryQuery } from "../../../services/services";
-import {Loader} from '../../../components/Loader'; 
 import AdminDashboardItems from '../../../components/HistoryDashItem';
 
 export const HistoryAdmin = () => {
@@ -56,16 +55,18 @@ export const HistoryAdmin = () => {
               Cancelled
             </div>
           </div>
-          <Row className="px-md-5 px-3 px-lg-3 px-xl-1 mx-xl-4 scroll vh-75">
-            {isLoadingData && <Loader />}  
+          <Row className="px-md-5 px-3 px-lg-3 px-xl-1 mx-xl-4">
+            {isLoadingData && (
+              <div className='text-center my-5'>
+                <h3>Loading...</h3>
+              </div>)}  
             { (!isLoadingData && (isError || events.length === 0)) && (
               <div className="text-center py-5">
                 <h3>No events found</h3>
               </div>
             )}
             { !isLoadingData && events.map((event) => (
-              <Col sm={6} lg={4} xs={12}  xl={3}
-           key={event.uuid} className="px-1 py-2 px-lg-2 px-md-2 px-sm-5 p-lg-3">
+              <Col sm={6} lg={4} xs={12} key={event.uuid} className="px-1 py-2 px-lg-2 px-md-2 px-sm-5 p-lg-3">
                 <AdminDashboardItems 
                   items={event}
                   setOrganizerBtn={false}
