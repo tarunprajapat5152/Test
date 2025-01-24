@@ -87,6 +87,7 @@ const OverviewAdmin = () => {
             </Col>
           </Row>
         </section>
+        
         <section className="mb-3">
           <h2 className="mb-4 ms-xl-3 text-color">Total Users</h2>
           <Row className='px-xl-4'>
@@ -97,7 +98,7 @@ const OverviewAdmin = () => {
               <InfoCard title="Organizer" value={data.userData.organizer} />
             </Col>
             <Col md={4} lg={3} className="mb-3 px-5 px-md-2">
-              <InfoCard title="Total" value={data.userData.user+data.userData.organizer} />
+              <InfoCard title="Total" value={`${Number(data.userData.user) + Number(data.userData.organizer)}`} />
             </Col>
           </Row>
         </section>

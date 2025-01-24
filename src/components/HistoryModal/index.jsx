@@ -23,13 +23,14 @@ const DetailsModal = ({ selectedItem, show, setShow }) => {
         <p><b>Venue:</b> {selectedItem.placeAddress}</p>
         <p><b>Ticket Price:</b> Rs {selectedItem.ticketPrice}/- only</p>
         <p><b>Available Tickets:</b> {selectedItem.avaliabelTicket}</p>
-        <p><b>Event Details:</b> {selectedItem.eventDetails}</p>
         {selectedItem.status === "canceled" && (
-          <p><b>Refund Price:</b> Rs {selectedItem.refundPrice}/-</p>
+          <p><b>Refund Price:</b> Rs {(selectedItem.placePrice)*80/100}/-</p>
         )}
         {(selectedItem.status === "paid" || selectedItem.status === "unpaid") && (
-          <p><b>Revenue Price:</b> Rs {selectedItem.revenuePrice}/-</p>
+          <p><b>Revenue Price:</b> Rs {(selectedItem.ticketPrice*(selectedItem.maxTicket-selectedItem.avaiabelTickets))*80/100}/-</p>
         )}
+        <p><b>Event Details:</b> {selectedItem.eventDetails}</p>
+       
       </Modal.Body>
     </Modal>
   );
