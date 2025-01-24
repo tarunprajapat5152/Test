@@ -50,7 +50,7 @@ export const Profile = ({ show, setShow }) => {
     fetchData();
   }, []);
   
-  // const handleClose = () => setShow(false);
+   const handleClose = () => setShow(false);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -92,6 +92,7 @@ export const Profile = ({ show, setShow }) => {
       if (response.status === 200) {
         setUserInfo([values.firstName, values.lastName, values.phoneOrEmail]);
         toast.success(response.message);
+        handleClose();
       } else {
         toast.error(response.message);
       }

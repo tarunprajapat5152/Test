@@ -221,3 +221,21 @@ export const blogUpdate = Yup.object({
   .min(70, "please enter atleast 70 char")
   .max(100, "you can enter max 100 char")
 })
+export const newPlaceSchema = Yup.object({
+  Place: Yup.string()
+    .min(2, 'Place name must be at least 2 characters.')
+    .max(50, 'Place name must not exceed 50 characters.')
+    .matches(/^[A-Za-z\s]+$/, 'Place name must contain only letters.')
+    .required('Required'),
+  City: Yup.string()
+    .min(2, 'City name must be at least 2 characters.')
+    .max(50, 'City name must not exceed 15 characters.')
+    .matches(/^[A-Za-z\s]+$/, 'City name must contain only letters.')
+    .required('Required'),
+  Seats: Yup.string()
+    .matches(/^[1-9][0-9]*$/, 'Seats must not start with 0 and should only contain digits.')
+    .required('Seats is required'),
+  Placeprice: Yup.string()
+    .matches(/^[1-9][0-9]*$/, 'Price must not start with 0 and should only contain digits.')
+    .required('Place price is required'),
+});

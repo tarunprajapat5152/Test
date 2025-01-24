@@ -53,6 +53,10 @@ input:focus {
   width: 55px !important;
   height: 55px !important;
 }
+.custom-card {
+  background-color: #f0f0f0; 
+  box-shadow: none;
+}
 .Toastify__close-button {
   color: white !important;
   margin: 0px 5px !important;

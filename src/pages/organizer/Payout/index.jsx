@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import {Row, Col } from 'react-bootstrap';
 import { useGetPayoutEventQuery } from '../../../services/services';
@@ -8,7 +9,10 @@ import {Loader} from '../../../components/Loader';
 export const Payout = () => {
   const [activeTab, setActiveTab] = useState('history');
   const [email, setEmail] = useState('');
+   const [isLoadingData, setIsLoadingData] = useState(true); 
   const [queryParams, setQueryParams] = useState(null);
+  const { data: events, isLoading } = useGetPayoutEventQuery(queryParams, { skip: !queryParams });
+
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -24,19 +28,30 @@ export const Payout = () => {
       console.warn('Token not found in localStorage');
     }
   }, []);
+   useEffect(() => {
+      if (isLoading) {
+        setIsLoadingData(true);
+      } 
+      else {
+        setIsLoadingData(false);
+      }
+    }, [isLoading]); 
 
   useEffect(() => {
     if (email && activeTab) {
       setQueryParams({ email, status: activeTab });
     }
   }, [email, activeTab]);
-
-  const { data: events, isLoading } = useGetPayoutEventQuery(queryParams, { skip: !queryParams });
-
+   useEffect(() => {
+      if (events) {
+        setIsLoadingData(false);
+      }
+    }, [events])
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
     if (email) {
       setQueryParams({ email, status: tabName });
+      setIsLoadingData(true); 
     }
   };
 
@@ -64,7 +79,7 @@ export const Payout = () => {
               Get Payment
             </div>
           </div>
-          {isLoading ? (
+          {isLoadingData ? (
   <Loader />
 ) : (
   <>
@@ -79,7 +94,6 @@ export const Payout = () => {
           sm={6}
           lg={4}
           xs={12}
-          xl={3}
           key={event.uuid}
           className="px-1 px-xl-3 py-2 px-md-2 px-sm-5 p-lg-3"
         >

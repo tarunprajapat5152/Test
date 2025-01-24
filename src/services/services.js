@@ -384,11 +384,36 @@ export const postsApi = createApi({
     getOrganizerPaymentSuccess:builder.query({
       query:(sessionId) =>
         `api/payment/organizer-get-payment-success?sessionId=${sessionId}`
-    })
+    }),
+
+
+    addNewPlace:builder.mutation({
+      query:(data)=>({
+        url:"/register-place/add-place",
+        method:"POST",
+        body:data
+      }),
+      
+    }),
+    viewPayment: builder.query({
+      query: ({placeUuid=''}) => 
+        `/api/payment/place-payment-data?placeUuid=${placeUuid}`
+    }),
+    unPaidPayment: builder.query({
+      query: ({placeUuid=''}) => 
+        `/api/payment/place-payment-all?placeUuid=${placeUuid}`
+    }),
+    getTotalPayment:builder.query({
+      query: () => "/api/payment/event-overview",
+    }),
   }),
 });
 
 export const {
+  useViewPaymentQuery,
+  useUnPaidPaymentQuery,
+  useGetTotalPaymentQuery,
+  useAddNewPlaceMutation,
   useGetOrganizerPaymentSuccessQuery,
   useGetOrganizerHistoryQuery,
   useGetEventAdminQuery,

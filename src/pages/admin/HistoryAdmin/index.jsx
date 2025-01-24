@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { useGetOrganizerHistoryQuery } from "../../../services/services";
 import {Loader} from '../../../components/Loader'; 
-import AdminDashboardItems from '../../../components/AdminDashboardItems';
+import AdminDashboardItems from '../../../components/HistoryDashItem';
 
 export const HistoryAdmin = () => {
   const [activeTab, setActiveTab] = useState('paid');
