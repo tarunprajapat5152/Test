@@ -40,7 +40,7 @@ const LoginWithOtp = () => {
 
   return (
     <>
-      <Form onSubmit={formik.handleSubmit} className="w-50 my-form">
+      <Form onSubmit={formik.handleSubmit} className="w-50 my-form mt-5">
         <h3 className="text-center fw-bold fs-5 mb-4">LOGIN WITH OTP</h3>
         <p className="fs-7 mb-4">
           Please enter your registered email address.

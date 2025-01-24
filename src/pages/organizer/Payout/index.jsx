@@ -79,6 +79,7 @@ export const Payout = () => {
           sm={6}
           lg={4}
           xs={12}
+          xl={3}
           key={event.uuid}
           className="px-1 px-xl-3 py-2 px-md-2 px-sm-5 p-lg-3"
         >

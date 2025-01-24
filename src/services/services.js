@@ -376,10 +376,20 @@ export const postsApi = createApi({
         body: data,
       }),
     }),
+
+    getOrganizerPayment: builder.query({
+      query: (uuid) => 
+        `/api/payment/organizer-get-payment?eventUuid=${uuid}`
+    }),
+    getOrganizerPaymentSuccess:builder.query({
+      query:(sessionId) =>
+        `api/payment/organizer-get-payment-success?sessionId=${sessionId}`
+    })
   }),
 });
 
 export const {
+  useGetOrganizerPaymentSuccessQuery,
   useGetOrganizerHistoryQuery,
   useGetEventAdminQuery,
   useEventApprovalQuery,

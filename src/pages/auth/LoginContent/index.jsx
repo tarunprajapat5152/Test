@@ -48,7 +48,7 @@ const Login_content = () => {
 
   return (
     <>
-      <Form onSubmit={formik.handleSubmit} className="w-50 my-form">
+      <Form onSubmit={formik.handleSubmit} className="w-50 my-form mt-5">
         <h3 className="text-center fw-bold fs-5 mb-5">LOGIN</h3>
         <Input
           name="email"

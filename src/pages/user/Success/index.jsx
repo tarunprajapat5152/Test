@@ -1,16 +1,24 @@
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import { useOrganizerSuccessQuery, useSuccessQuery } from "../../../services/services";
+import {
+  useGetOrganizerPaymentSuccessQuery,
+  useOrganizerSuccessQuery,
+  useSuccessQuery,
+} from "../../../services/services";
 import { payment } from "../../../assets/Constant";
 import "./style.css";
 
 const Success = () => {
   const navigate = useNavigate();
   const sessionId = localStorage.getItem("sessionId");
-  if (sessionId) {
-    console.log(sessionId);
+  const key = localStorage.getItem("key");
 
-    useSuccessQuery(sessionId);
+  if (sessionId) {
+    useSuccessQuery(sessionId, { enabled: sessionId && key === "cart" });
+  } else navigate("/upevent");
+
+  if (sessionId) {
+    useGetOrganizerPaymentSuccessQuery(sessionId, { enabled: sessionId && key === "get-payment" });
   } else navigate("/upevent");
 
   const handleBack = () => {
@@ -18,7 +26,9 @@ const Success = () => {
   };
 
   if (sessionId) {
-    useOrganizerSuccessQuery(sessionId);
+    useOrganizerSuccessQuery(sessionId, {
+      enabled: sessionId && key === "event-payment",
+    });
   } else navigate("/placeorder");
 
   return (

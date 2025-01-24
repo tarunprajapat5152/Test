@@ -34,8 +34,7 @@ const EventsAdmin = () => {
   }
 
   if (isError) {
-    toast.error("Failed to load data");
-    return <div className="text-center py-5">Error fetching data</div>;
+    return <div className="text-center py-5 fs-4 fw-medium">No Events Found</div>;
   }
 
   return (
@@ -68,6 +67,7 @@ const EventsAdmin = () => {
                   sm={6}
                   lg={4}
                   xs={12}
+                  xl={3}
                   key={items.eventUuid}
                   className="m-auto m-sm-0 px-1 py-2"
                 >
@@ -76,6 +76,7 @@ const EventsAdmin = () => {
                     items={items}
                     setOrganizerBtn={false}
                     setEventsBtn={false}
+                    setEdit={true}
                   />
                 </Col>
               ))

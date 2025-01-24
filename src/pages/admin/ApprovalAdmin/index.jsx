@@ -34,7 +34,7 @@ const ApprovalAdmin = () => {
   return (
     <>
         <div className="d-flex justify-content-center">
-      <div style={{ width: "92%" }} className="vh-75 scroll">
+      <div style={{ width: "92%" }}>
         <div className="tabs fs-7 d-flex justify-content-center mb-3 position-sticky top-0 my-bg z-1">
           <div
             className={`tab-btn bg-transparent border-0 rounded-0 px-2 px-md-3 py-2 mx-md-2 mx-0 text-center crs ${
@@ -53,7 +53,7 @@ const ApprovalAdmin = () => {
             Events Approval
           </div>
         </div>
-        <Row className="justify-content-start px-md-5 px-3 px-lg-3 px-xl-1 mx-xl-4">
+        <Row className="justify-content-start vh-75 scroll px-md-5 px-3 px-lg-3 px-xl-1 mx-xl-4">
           {isLoading ? (
             <div className="d-flex justify-content-center align-items-center" style={{height:"350px"}}>
               <Spinner animation="border" role="status">
@@ -62,7 +62,7 @@ const ApprovalAdmin = () => {
             </div>
           ) : (eventData?.data?.length === 0 ? (
             <div className="text-center py-5">
-              <h3>No events found</h3>
+              <h3>No requests found</h3>
             </div>
           ) : (
             <Row className="g-2">
@@ -71,6 +71,7 @@ const ApprovalAdmin = () => {
                   sm={6}
                   lg={4}
                   xs={12}
+                  xl={3}
                   className="m-auto m-sm-0 px-1 py-2"
                   key={event.eventUuid}
                 >

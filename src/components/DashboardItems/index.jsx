@@ -5,7 +5,7 @@ import EditModal from "../EditModal";
 import CancelModal from "../CancelModal";
 import DetailsModal from "../DetailsModal";
 import "../../index.css";
-import { useOrganizerPaymentQuery } from "../../services/services";
+import { useOrganizerPaymentQuery,useGetOrganizerPaymentQuery } from "../../services/services";
 
 const DashboardItems = ({
   items,
@@ -13,6 +13,8 @@ const DashboardItems = ({
   setCancelBtn = false,
   setRejectedPending = null,
   setEdit = false,
+  setPaid ,
+  setGetPayment
 }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [show, setShow] = useState(false);
@@ -21,15 +23,25 @@ const DashboardItems = ({
   const [showDetailsData, setShowDetailsData] = useState(null);
   const [eventUuid, setEventUuid] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [uuid,setUuid]=useState("")
 
   const { data: response, error, isLoading } = useOrganizerPaymentQuery(eventUuid, {
     skip: !eventUuid,
   });
 
+  const { data } = useGetOrganizerPaymentQuery( uuid ,{skip: !uuid, }
+  );
+  if(data){
+    window.location.href = data.paymentUrl;
+    localStorage.setItem("sessionId",data.sessionId);
+    localStorage.setItem("key","get-payment")
+  }
+
   useEffect(() => {
     if (response) {
       window.location.href=response?.paymentUrl
       localStorage.setItem("sessionId",response?.sessionId)
+      localStorage.setItem("key","event-payment")
     }
   }, [response, error, eventUuid]);
 
@@ -60,6 +72,13 @@ const DashboardItems = ({
   const handlePay = (items) => {
     setEventUuid(items.uuid);
   };
+
+  const handleGetPayment = (items) =>{
+   if (items.uuid) {
+      setUuid(items.uuid); 
+    }
+
+  }
 
   if (!items) {
     console.error("Error: Missing required items data.");
@@ -126,6 +145,23 @@ const DashboardItems = ({
             >
               Pay
             </Button>
+            <Button
+              disabled
+              className={`${
+                setPaid ? "d-block" : "d-none"
+              } rounded-5 bg-success border-0 text-white fw-medium px-3 py-1`}
+            >
+              Paid
+            </Button>
+            <Button
+              className={`${
+                setGetPayment ? "d-block" : "d-none"
+              } rounded-5 bg-whole border-0 text-white fw-medium px-3 py-1`}
+              onClick={() => handleGetPayment(items)}
+            >
+              Get Payment
+            </Button>
+
             <p
               className={`${
                 setRejectedPending ? "d-block" : "d-none"

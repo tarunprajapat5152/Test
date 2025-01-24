@@ -121,6 +121,7 @@ const Approval = () => {
                   sm={6}
                   lg={4}
                   xs={12}
+                  xl={3}
                   className="m-auto m-sm-0 px-1 py-2"
                   key={event.eventUuid}
                 >

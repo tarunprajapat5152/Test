@@ -44,7 +44,6 @@ function Cart() {
     (async () => {
       try {
         const token = localStorage.getItem("token");
-        console.log(token);
         
         if ( token) {
           setEmail(jwtDecode(token).sub );
@@ -117,6 +116,7 @@ function Cart() {
     if (res.data.sessionUrl) {
       window.location.href = res.data.sessionUrl;
       localStorage.setItem("sessionId", res.data.sessionId);
+      localStorage.setItem("key","cart")
     }
   }
 

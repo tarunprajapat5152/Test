@@ -4,14 +4,17 @@ import { RiInformation2Fill } from "react-icons/ri";
 import { toast } from "react-toastify";
 import { AppContext } from "../../routes/AppRoutes";
 import { useOrganizerApprovalQuery, useEventApprovalQuery, useOrganizerPaymentQuery } from "../../services/services";
-import DetailsModal from "../../components/DetailsModal";
+import DetailsModal from "../../components/DetailsModal"
+import EditModal from "../EditModal";
 
 const AdminDashboardItems = ({
   items,
   setOrganizerBtn,
   setEventsBtn,
   setInfo,
+  setEdit
 }) => {
+  const [selectedItem,setSelectedItem]=useState("")
   const { setUpdate } = useContext(AppContext);
   const [status, setStatus] = useState("");
   const [email, setEmail] = useState("");
@@ -19,10 +22,11 @@ const AdminDashboardItems = ({
   const [eventUuid, setEventUuid] = useState(null);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [showDetailsData, setShowDetailsData] = useState(null);
+  const[show,setShow]= useState(false)
 
   const { data: paymentData } = useOrganizerPaymentQuery(
     { eventUuid },
-    { skip: !eventUuid } // sun tu abhi work kar raha he kya mere laptop ke saath bol ha kab tak 4 m
+    { skip: !eventUuid }
   );
 
   const { data, isLoading } = useOrganizerApprovalQuery(
@@ -66,10 +70,6 @@ const AdminDashboardItems = ({
     setStatus(action);
   };
 
-  const handleGetPayment = (event) => {
-    if (event.uuid) setEventUuid(event.uuid);
-  };
-
   const showDetailedModal = (item) => {
     setShowDetailsData(item);
     setShowDetailsModal(true);
@@ -79,6 +79,11 @@ const AdminDashboardItems = ({
     const date = new Date(dateString);
     const options = { day: "2-digit", month: "short", year: "numeric" };
     return new Intl.DateTimeFormat("en-US", options).format(date);
+  };
+
+  const handleEdit = (event) => {
+    setSelectedItem(event);
+    setShow(true);
   };
 
   return (
@@ -101,23 +106,40 @@ const AdminDashboardItems = ({
               />
             </Col>
             <Col xs={12} className="mt-2">
-              <div className="d-flex flex-column">
-                <div className="d-flex justify-content-between">
-                  <h5 className="fw-bold mb-1">{items.eventName}</h5>
-                  <p className="fw-medium text-primary mb-1">
-                    {items.startDate}
-                  </p>
-                </div>
-                <p className="mb-1">Organization Name: {items.organizerName||"No shop"}</p>
-                <p className="mb-1">Details:{items.details}</p>
-                <p className="mb-1">Email: {items.email}</p>
-                <p className="mb-1">Attempts: {items.attempts}</p>
-                <p className="text-muted mb-2 text-break">
-                  {items.eventDetails?.length > 65
-                    ? `${items.eventDetails.substring(0, 65)}...`
-                    : items.eventDetails}
-                </p>
-              </div>
+            <div className={setOrganizerBtn ? "d-none" : "d-flex flex-column"}>
+  <div className="justify-content-between d-flex">
+    <h5 className="fw-bold mb-1">{items.eventName}</h5>
+    <p className="fw-medium text-primary mb-1">
+      {items.startDate}
+    </p>
+  </div>
+  <div className="d-flex flex-column">
+    <p className="my-1 fw-medium text-dark mb-1 text-break">
+      Details:{" "}
+      {items.eventDetails?.length > 65
+        ? `${items.eventDetails.substring(0, 65)}...`
+        : items.eventDetails}
+    </p>
+    <p className="mb-1">City: {items.city}</p>
+    <p className="mb-1">Email: {items.email}</p>
+    <p className="mb-1">Place Price: {items.placePrice}</p>
+  </div>
+</div>
+
+<div className={setEventsBtn? "d-none " : "d-flex flex-column"}>
+<p className="mb-1">Email: {items.email}</p>
+  <p className="mb-1">
+    Organization Name: {items.organizationName || "No shop"}
+  </p>
+  <p className="mb-1 text-break">
+    Details:{" "}
+    {items.details?.length > 65
+      ? `${items.details.substring(0, 65)}...`
+      : items.details}
+  </p>
+  <p className="mb-1">Attempts: {items.attempts}</p>
+</div>
+
 
               <div className="mt-2 d-flex justify-content-between">
                 {setOrganizerBtn && (
@@ -192,6 +214,14 @@ const AdminDashboardItems = ({
                     ? `${items.eventDetails.substring(0, 65)}...`
                     : items.eventDetails}
               </p>
+                          <Button
+                            className={`${
+                              setEdit ? "d-block" : "d-none"
+                            } rounded-5 bg-success border-0 text-white fw-medium px-3 py-1`}
+                            onClick={() => handleEdit(items)}
+                          >
+                            Edit
+                          </Button>
               <div>
                 {setInfo && (
                   <Button
@@ -213,6 +243,9 @@ const AdminDashboardItems = ({
           show={showDetailsModal}
           setShow={setShowDetailsModal}
         />
+      )}
+      {selectedItem && (
+        <EditModal selectedItem={selectedItem} show={show} setShow={setShow} />
       )}
     </>
   );

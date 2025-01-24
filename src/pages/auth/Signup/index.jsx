@@ -52,7 +52,7 @@ const Signup = () => {
 
   return (
     <>
-      <div className="w-50 my-form">
+      <div className="w-50 my-form mt-5">
         <h3 className="text-center fw-bold fs-5 mb-4">Sign Up</h3>
         <Form onSubmit={formik.handleSubmit}>
           <Input
